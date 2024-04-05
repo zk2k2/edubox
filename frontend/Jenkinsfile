@@ -1,0 +1,24 @@
+pipeline{
+  agent any
+  stages{
+    stage('Build'){
+      steps{
+        sh 'docker build -t edubox-frontend .'
+        sh 'docker tag edubox-frontend:latest'
+      }
+    }
+    stage('Deploy'){
+      steps{
+       withCredentials([string(credentialsId: 'DOCKER_CREDENTIALS_ID', variable: 'DOCKERHUB_CREDENTIALS')]) {
+    sh "echo ${DOCKERHUB_CREDENTIALS} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+    sh "docker push edubox-frontend:latest"
+    }
+
+      }
+    }
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+}
