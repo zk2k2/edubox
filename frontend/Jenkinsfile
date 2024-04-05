@@ -1,27 +1,27 @@
-// pipeline{
-//   agent any
-//   stages{
-//     stage('Checkout'){
-//       steps{
-//         checkout scm
-//       }
-//     stage('Build'){
-//       steps{
-//         sh 'cd frontend && docker build -t edubox-frontend .'
-//       }
-//     }
-//     stage('Deploy'){
-//       steps{
-//        withCredentials([string(credentialsId: 'DOCKER_CREDENTIALS_ID', variable: 'DOCKERHUB_CREDENTIALS')]) {
-//     sh "echo ${DOCKERHUB_CREDENTIALS} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
-//     sh "docker push edubox-frontend:latest"
-//     }
+pipeline{
+  agent any
+  stages{
+    stage('Checkout'){
+      steps{
+        checkout scm
+      }
+    stage('Build'){
+      steps{
+        sh 'cd frontend && docker build -t edubox-frontend .'
+      }
+    }
+    stage('Deploy'){
+      steps{
+       withCredentials([string(credentialsId: 'DOCKER_CREDENTIALS_ID', variable: 'DOCKERHUB_CREDENTIALS')]) {
+    sh "echo ${DOCKERHUB_CREDENTIALS} | docker login --username ${DOCKERHUB_USERNAME} --password-stdin"
+    sh "docker push edubox-frontend:latest"
+    }
 
-//       }
-//     }
-//   }
-//   post {
-//     always {
-//       sh 'docker logout'
-//     }
-// }
+      }
+    }
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+}

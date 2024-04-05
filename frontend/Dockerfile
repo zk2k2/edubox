@@ -1,17 +1,17 @@
 FROM node 
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY package.json package-lock.json ./
+COPY package.json package-lock.json ./
 
-# RUN npm install --force
+RUN npm install --force
 
-# COPY . .
+COPY . .
 
-# RUN npm run build
+RUN npm run build
 
-# RUN npm install -g serve
+RUN npm install -g serve
 
-# EXPOSE 3000
+EXPOSE 3000
 
-# CMD ["serve", "-s", "build"]
+CMD ["serve", "-s", "build"]
