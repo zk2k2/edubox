@@ -7,7 +7,7 @@ pipeline {
             steps {
                 // Checkout the repository with sparse checkout paths
                 checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/master']],
+                          branches: [[name: '*/main']],
                           doGenerateSubmoduleConfigurations: false,
                           extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [['backend']]]],
                           submoduleCfg: [],
