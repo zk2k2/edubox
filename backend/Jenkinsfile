@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-        stage('Deploy'){
-          steps{
-            sh 'docker-compose -p edubox-backend up -d --build'
-          }
+    stages {
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose -p edubox-backend up -d --build'
+            }
         }
-        
     }
 }
