@@ -3,9 +3,12 @@ pipeline {
 
 
     stages {
-        stage('Build') {
+         stage('Checkout') {
             steps {
-                checkout scm
+                // Checkout only the 'backend' directory
+                git url: 'https://github.com/zk2k2/edubox.git', 
+                    branch: 'main', 
+                    sparseCheckoutPaths: [['backend']]
             }
         }
         stage('Deploy') {
