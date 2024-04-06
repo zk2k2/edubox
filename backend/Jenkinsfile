@@ -13,9 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-              dir('/backend') {
                 sh 'docker-compose -p edubox-backend up -d --build'
-            }
         }
     }
 }
