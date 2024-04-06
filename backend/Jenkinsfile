@@ -2,12 +2,6 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/zk2k2/edubox.git'
-            }
-        }
-        
         stage('Build') {
             steps {
                 sh 'mvn clean package'
