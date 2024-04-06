@@ -3,12 +3,15 @@ pipeline {
 
 
     stages {
-         stage('Checkout') {
+             stage('Checkout') {
             steps {
-                // Checkout only the 'backend' directory
-                git url: 'https://github.com/zk2k2/edubox.git', 
-                    branch: 'main', 
-                    sparseCheckoutPaths: [['backend']]
+                // Checkout the repository with sparse checkout paths
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/master']],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [['backend']]]],
+                          submoduleCfg: [],
+                          userRemoteConfigs: [[url: 'https://github.com/zk2k2/edubox.git']]])
             }
         }
         stage('Deploy') {
