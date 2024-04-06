@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/zk2k2/edubox.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+                
+                sh 'cp target/backend-0.0.1-SNAPSHOT.jar ${WORKSPACE}/'
+            }
+        }
+
+        stage('Deploy'){
+          steps{
+            sh 'docker-compose -p edubox-backend up -d --build'
+          }
+        }
+        
+    }
+}
