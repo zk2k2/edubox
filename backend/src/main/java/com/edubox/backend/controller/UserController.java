@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -25,7 +26,7 @@ public class UserController {
 
     // GET /api/v1/users/{userId} - Get user by ID
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
+    public ResponseEntity<User> getUserById(@PathVariable UUID userId) {
         User user = service.getUserById(userId);
         return ResponseEntity.ok(user);
     }
@@ -33,7 +34,7 @@ public class UserController {
     // POST /api/v1/users - Create a new user
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        user.setId(0);
+        //user.setId(0);
         User createdUser = service.save(user);
         return ResponseEntity.ok(createdUser);
     }
@@ -47,7 +48,7 @@ public class UserController {
 
     // DELETE /api/v1/users/{userId} - Delete user by ID
     @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
+    public ResponseEntity<String> deleteUser(@PathVariable UUID userId) {
         service.deleteUser(userId);
         return ResponseEntity.ok("Deleted user with ID: " + userId);
     }
