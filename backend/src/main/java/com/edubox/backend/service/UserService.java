@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class UserService {
 
     public List<User> getAllUsers() { return repository.findAll();}
 
-    public User getUserById(Integer userId) {
+    public User getUserById(UUID userId) {
         Optional<User> result = repository.findById(userId);
 
         User theUser = null;
@@ -61,7 +62,7 @@ public class UserService {
     }
 
 
-    public void deleteUser(Integer userId) {
+    public void deleteUser(UUID userId) {
         repository.deleteById(userId);
     }
 }

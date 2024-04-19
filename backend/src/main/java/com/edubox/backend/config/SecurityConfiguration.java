@@ -67,6 +67,9 @@ public class SecurityConfiguration {
                                         .requestMatchers(POST, "/api/v1/users/**").hasAnyAuthority( ADMIN_CREATE.name())
                                         .requestMatchers(PUT, "/api/v1/users/**").hasAnyAuthority( ADMIN_UPDATE.name())
                                         .requestMatchers(DELETE, "/api/v1/users/**").hasAnyAuthority(ADMIN_DELETE.name())
+                                        .requestMatchers("/api/v1/containers/user/**").hasAnyRole(ADMIN.name())
+                                        .requestMatchers(GET, "/api/v1/containers/user/**").hasAnyAuthority( ADMIN_READ.name())
+
                                         .anyRequest()
                                         .authenticated()
                 )
