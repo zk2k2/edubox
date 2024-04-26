@@ -7,6 +7,7 @@ import WireframeThree from "pages/WireframeThree";
 import WireframeTwo from "pages/WireframeTwo";
 import WireframeFour from "pages/WireframeFour";
 
+
 const ProjectRoutes = () => {
   let element = useRoutes([
     { path: "/", element: <Home /> },
@@ -27,6 +28,7 @@ const ProjectRoutes = () => {
       path: "wireframefour",
       element: <WireframeFour />,
     },
+   
   ]);
 
   return element;
