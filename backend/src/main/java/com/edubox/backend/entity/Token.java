@@ -16,6 +16,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class Token {
 
     @Id
     @GeneratedValue
-    public Integer id;
+    public UUID id;
 
     @Column(unique = true)
     public String token;

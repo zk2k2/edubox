@@ -16,7 +16,10 @@ export default function WireframeThreePage() {
     <>
       <Helmet>
         <title>Yassine's Application1</title>
-        <meta name="description" content="Web site created using create-react-app" />
+        <meta
+          name="description"
+          content="Web site created using create-react-app"
+        />
       </Helmet>
       <div className="w-full bg-gray-50">
         <div className="flex flex-col">
@@ -31,7 +34,7 @@ export default function WireframeThreePage() {
               <Menu
                 menuItemStyles={{
                   button: {
-                    padding: "4px",
+                    padding: "12px", // Adjust padding to increase vertical spacing
                     gap: "22px",
                     alignSelf: "start",
                     color: "#505968",
@@ -44,38 +47,66 @@ export default function WireframeThreePage() {
               >
                 <MenuItem
                   icon={
-                    <Img src="images/img_sandbox.png" alt="sandbox_one" className="h-[41px] w-[41px] object-cover" />
+                    <Img
+                      src="images/img_sandbox.png"
+                      alt="sandbox_one"
+                      className="h-[41px] w-[41px] object-cover"
+                    />
                   }
                 >
                   Virtual Machines
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_group.png" alt="image" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_group.png"
+                      alt="image"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   User Management
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_user_1.png" alt="user_one" className="h-[28px] w-[28px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_user_1.png"
+                      alt="user_one"
+                      className="h-[28px] w-[28px] object-cover"
+                    />
+                  }
                 >
                   My Account
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_info.png" alt="info_one" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_info.png"
+                      alt="info_one"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   Assistance
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_gear.png" alt="gear_one" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_gear.png"
+                      alt="gear_one"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   Settings
                 </MenuItem>
               </Menu>
             </Sidebar>
             <div className="flex flex-col md:self-stretch gap-[18px] flex-1">
-              <div className="flex p-[13px] bg-white-A700">
-                <div className="flex justify-between items-center w-[30%] md:w-full ml-1.5 gap-5 md:ml-0">
-                  <div className="w-[31%]">
-                    <div className="bg-blue-A700 rounded-[43px]">
+              <div className="flex p-[13px] bg-white-A700 mx-5 mt-5">
+                <div className="flex  w-[30%] md:w-full ml-1.5 gap-5 md:ml-0">
+                  <div className="w-[20%]">
+                    <div className="bg-blue-A700 rounded-[1000px]">
                       <Img
                         src="images/img_user.png"
                         alt="user_three"
@@ -93,13 +124,17 @@ export default function WireframeThreePage() {
                   </div>
                 </div>
               </div>
-              <div className="p-3 bg-white-A700">
+              <div className="p-5 m-5 bg-white-A700">
                 <div className="flex flex-col mb-[67px] gap-[25px]">
                   <div className="flex justify-between items-center gap-5">
                     <Heading size="s" as="h2">
                       Profile details
                     </Heading>
-                    <Img src="images/img_edit.png" alt="edit_one" className="self-end w-[28px] object-cover" />
+                    <Img
+                      src="images/img_edit.png"
+                      alt="edit_one"
+                      className="self-end w-[28px] object-cover"
+                    />
                   </div>
                   <div className="flex md:flex-col justify-center items-center gap-[30px]">
                     <div className="flex flex-col md:self-stretch gap-[23px] flex-1">
@@ -159,7 +194,13 @@ export default function WireframeThreePage() {
                           type="password"
                           name="password"
                           placeholder={`••••••••••••••`}
-                          suffix={<Img src="images/img_eye.png" alt="Eye" className="w-[23px] h-[23px]" />}
+                          suffix={
+                            <Img
+                              src="images/img_eye.png"
+                              alt="Eye"
+                              className="w-[23px] h-[23px]"
+                            />
+                          }
                           className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
                         />
                       </div>

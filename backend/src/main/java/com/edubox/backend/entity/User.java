@@ -2,6 +2,7 @@ package com.edubox.backend.entity;
 
 import com.edubox.backend.enums.Role;
 import com.edubox.backend.entity.Token;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,6 +12,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +31,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private UUID id;
     private String firstname;
     private String lastname;
     private String email;
@@ -36,14 +39,23 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    //add json ignore
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+    //for container
+    //@OneToMany(mappedBy = "user")
+    //private List<Token> tokens;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Container> container;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
     }
+
+
 
     @Override
     public String getPassword() {

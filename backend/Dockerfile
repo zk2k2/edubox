@@ -17,4 +17,4 @@ RUN mvn clean package
 COPY target/backend-0.0.1-SNAPSHOT.jar application.jar
 
 # Specify the command to run the application
-ENTRYPOINT ["java", "-jar", "application.jar"]
+CMD  ["java", "-jar", "application.jar"]
