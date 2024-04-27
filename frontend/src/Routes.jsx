@@ -6,7 +6,7 @@ import WireframeOne from "pages/WireframeOne";
 import WireframeThree from "pages/WireframeThree";
 import WireframeTwo from "pages/WireframeTwo";
 import WireframeFour from "pages/WireframeFour";
-
+import SignUp from "pages/SignUp";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -28,7 +28,10 @@ const ProjectRoutes = () => {
       path: "wireframefour",
       element: <WireframeFour />,
     },
-   
+    {
+      path: "signup",
+      element: <SignUp />,
+    },
   ]);
 
   return element;
