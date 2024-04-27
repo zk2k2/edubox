@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import Home from "pages/Home";
 import NotFound from "pages/NotFound";
 import WireframeOne from "pages/WireframeOne";
-import WireframeThree from "pages/WireframeThree";
+import UserProfile from "pages/UserProfile";
 import WireframeTwo from "pages/WireframeTwo";
 import WireframeFour from "pages/WireframeFour";
 import SignUp from "pages/SignUp";
@@ -17,8 +17,8 @@ const ProjectRoutes = () => {
       element: <WireframeOne />,
     },
     {
-      path: "wireframethree",
-      element: <WireframeThree />,
+      path: "user",
+      element: <UserProfile />,
     },
     {
       path: "wireframetwo",
