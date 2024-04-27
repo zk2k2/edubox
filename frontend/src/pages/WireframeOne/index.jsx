@@ -1,12 +1,20 @@
 import { Helmet } from "react-helmet";
 import { CloseSVG } from "../../assets/images";
-import { Img, Text, CheckBox, Heading, Switch, Button, Input } from "../../components";
+import {
+  Img,
+  Text,
+  CheckBox,
+  Heading,
+  Switch,
+  Button,
+  Input,
+} from "../../components";
 import Header from "../../components/Header";
 import { ReactTable } from "../../components/ReactTable";
 import { createColumnHelper } from "@tanstack/react-table";
 import { MenuItem, Menu, Sidebar } from "react-pro-sidebar";
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 const tableData = [
   {
     name: "myvm-32",
@@ -44,7 +52,7 @@ export default function WireframeOnePage() {
   const [collapsed, setCollapsed] = React.useState(false);
   useEffect(() => {
     const token = "your_token_here"; // Replace with your actual token
-    fetch(process.env.URL_BACKEND+"/ListVm", {
+    fetch(process.env.URL_BACKEND + "/ListVm", {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json", // Adjust content type as needed
@@ -54,24 +62,26 @@ export default function WireframeOnePage() {
       .then((data) => {
         if (showRunningOnly) {
           // Show only running VMs
-          const runningVMs = data.filter(item => item.status === "Running");
-          
+          const runningVMs = data.filter((item) => item.status === "Running");
+
           setTableVm(runningVMs);
         } else {
           // Show all VMs
           setTableVm(data);
         }
-        if (searchBarValue1 !==""){
-        const filteredData = tableVm.filter(item =>
-          item.name.toLowerCase().includes(searchBarValue1.trim().toLowerCase())
-        );
-    
-        setTableVm(filteredData);
+        if (searchBarValue1 !== "") {
+          const filteredData = tableVm.filter((item) =>
+            item.name
+              .toLowerCase()
+              .includes(searchBarValue1.trim().toLowerCase())
+          );
+
+          setTableVm(filteredData);
         }
       })
       .catch((error) => console.error("Error fetching data:", error));
-      // To remove just for test
-      setTableVm(tableData);
+    // To remove just for test
+    setTableVm(tableData);
   }, []);
   const handleSwitchChange = (val) => {
     console.log(val);
@@ -85,12 +95,22 @@ export default function WireframeOnePage() {
       tableColumnHelper.accessor("rowsquareninety", {
         cell: (info) => (
           <div className="flex">
-            <CheckBox name="squareninetyone" label="" id="squareninetyone2" className="mt-[18px] mb-[25px]" />
+            <CheckBox
+              name="squareninetyone"
+              label=""
+              id="squareninetyone2"
+              className="mt-[18px] mb-[25px]"
+            />
           </div>
         ),
         header: (info) => (
           <div className="flex pb-px px-px">
-            <CheckBox name="squareninety" label="" id="squareninety" className="ml-[7px] md:ml-0" />
+            <CheckBox
+              name="squareninety"
+              label=""
+              id="squareninety"
+              className="ml-[7px] md:ml-0"
+            />
           </div>
         ),
         meta: { width: "49px" },
@@ -98,7 +118,11 @@ export default function WireframeOnePage() {
       tableColumnHelper.accessor("name", {
         cell: (info) => (
           <div className="flex items-start gap-1">
-            <Img src="images/img_sandbox_35x35.png" alt="sandbox_three" className="w-[35px] mb-2 object-cover" />
+            <Img
+              src="images/img_sandbox_35x35.png"
+              alt="sandbox_three"
+              className="w-[35px] mb-2 object-cover"
+            />
             <Text as="p" className="mt-2 !text-blue_gray-700">
               {info?.getValue?.()}
             </Text>
@@ -175,9 +199,21 @@ export default function WireframeOnePage() {
       tableColumnHelper.accessor("actions", {
         cell: (info) => (
           <div className="flex items-start">
-            <Img src={info?.getValue?.()} alt="stop_one" className="w-[33px] mt-[3px] mb-[11px] object-cover" />
-            <Img src="images/img_trash.png" alt="trash_one" className="w-[26px] mt-1.5 object-cover" />
-            <Img src="images/img_menu_vertical.png" alt="menuvertical" className="w-[27px] mt-[3px] object-cover" />
+            <Img
+              src={info?.getValue?.()}
+              alt="stop_one"
+              className="w-[33px] mt-[3px] mb-[11px] object-cover"
+            />
+            <Img
+              src="images/img_trash.png"
+              alt="trash_one"
+              className="w-[26px] mt-1.5 object-cover"
+            />
+            <Img
+              src="images/img_menu_vertical.png"
+              alt="menuvertical"
+              className="w-[27px] mt-[3px] object-cover"
+            />
           </div>
         ),
         header: (info) => (
@@ -190,13 +226,14 @@ export default function WireframeOnePage() {
     ];
   }, []);
 
-
-
   return (
     <>
       <Helmet>
         <title>Yassine's Application1</title>
-        <meta name="description" content="Web site created using create-react-app" />
+        <meta
+          name="description"
+          content="Web site created using create-react-app"
+        />
       </Helmet>
       <div className="w-full bg-gray-50">
         <div className="flex flex-col">
@@ -205,52 +242,75 @@ export default function WireframeOnePage() {
             <Sidebar
               width="282px !important"
               collapsedWidth="80px !important"
-              collapsed={true}
-              className="flex flex-col h-screen top-0 p-6 sm:p-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
+              collapsed={collapsed}
+              className="flex flex-col h-screen top-0 py-[50px] md:py-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
             >
               <Menu
                 menuItemStyles={{
                   button: {
-                    padding: 0,
+                    padding: "12px", // Adjust padding to increase vertical spacing
                     gap: "22px",
                     alignSelf: "start",
                     color: "#505968",
                     fontWeight: 400,
                     fontSize: "20px",
-                    paddingTop: "4px",
-                    paddingBottom: "4px",
-                    [`&:hover, &.ps-active`]: { color: "#000000" },
                   },
                 }}
                 rootStyles={{ ["&>ul"]: { gap: "0.93px" } }}
-                className="flex flex-col w-full mt-[26px] mb-[295px] pb-[7px] pr-[7px]"
+                className="flex flex-col w-full mb-[269px] pb-[22px] sm:pb-5"
               >
                 <MenuItem
                   icon={
-                    <Img src="images/img_sandbox.png" alt="sandbox_one" className="h-[41px] w-[41px] object-cover" />
+                    <Img
+                      src="images/img_sandbox.png"
+                      alt="sandbox_one"
+                      className="h-[41px] w-[41px] object-cover"
+                    />
                   }
                 >
                   Virtual Machines
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_group.png" alt="image" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_group.png"
+                      alt="image"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   User Management
                 </MenuItem>
                 <MenuItem
                   icon={
-                    <Img src="images/img_user_28x28.png" alt="user_one" className="h-[28px] w-[28px] object-cover" />
+                    <Img
+                      src="images/img_user_1.png"
+                      alt="user_one"
+                      className="h-[28px] w-[28px] object-cover"
+                    />
                   }
                 >
                   My Account
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_info.png" alt="info_one" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_info.png"
+                      alt="info_one"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   Assistance
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_gear.png" alt="gear_one" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_gear.png"
+                      alt="gear_one"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   Settings
                 </MenuItem>
@@ -263,7 +323,11 @@ export default function WireframeOnePage() {
                     <Text size="xs" as="p" className="text-center">
                       VMs CPU Usage
                     </Text>
-                    <Text size="2xl" as="p" className="!text-teal-300 text-center">
+                    <Text
+                      size="2xl"
+                      as="p"
+                      className="!text-teal-300 text-center"
+                    >
                       24%{" "}
                     </Text>
                   </div>
@@ -272,7 +336,11 @@ export default function WireframeOnePage() {
                   <Text size="xs" as="p" className="text-center">
                     Memory Usage
                   </Text>
-                  <Text size="2xl" as="p" className="!text-amber-A400 text-center">
+                  <Text
+                    size="2xl"
+                    as="p"
+                    className="!text-amber-A400 text-center"
+                  >
                     38%
                   </Text>
                 </div>
@@ -305,7 +373,9 @@ export default function WireframeOnePage() {
                         value={searchBarValue1}
                         onChange={(e) => setSearchBarValue1(e)}
                         suffix={
-                          searchBarValue1?.length > 0 ? <CloseSVG onClick={() => setSearchBarValue1("")} /> : null
+                          searchBarValue1?.length > 0 ? (
+                            <CloseSVG onClick={() => setSearchBarValue1("")} />
+                          ) : null
                         }
                         className="sm:px-5 !text-gray-600 border-black-900_26 border border-solid flex-grow"
                       />
@@ -315,14 +385,24 @@ export default function WireframeOnePage() {
                         className="w-[33px] md:w-full object-cover"
                       />
                       <Link to="/WireframeFour">
-                      <Button color="blue_A700" shape="round" className="font-medium min-w-[158px]">
-                        Deploy new VM
-                      </Button>
+                        <Button
+                          color="blue_A700"
+                          shape="round"
+                          className="font-medium min-w-[158px]"
+                        >
+                          Deploy new VM
+                        </Button>
                       </Link>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Switch value={showRunningOnly} onChange={handleSwitchChange}/>
-                      <Text as="p" className="self-end mb-1 !text-gray-600 !font-normal">
+                      <Switch
+                        value={showRunningOnly}
+                        onChange={handleSwitchChange}
+                      />
+                      <Text
+                        as="p"
+                        className="self-end mb-1 !text-gray-600 !font-normal"
+                      >
                         Show only running VMs
                       </Text>
                     </div>
