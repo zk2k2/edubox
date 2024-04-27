@@ -1,6 +1,6 @@
 import subprocess
-from utils import get_random_port,save_ports_id,read_ports_id
-from stop_container import stop_container
+from scripts.utils import get_random_port,save_ports_id,read_ports_id
+from scripts.stop_container import stop_container
 
 
 used_port=read_ports_id()
