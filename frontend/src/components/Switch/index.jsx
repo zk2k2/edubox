@@ -1,6 +1,5 @@
 import React from "react";
-
-import SwitchProvider from "@dhiwise/react-switch";
+import Switch from "react-switch"; // Updated import
 import PropTypes from "prop-types";
 
 const sizes = {
@@ -10,13 +9,12 @@ const sizes = {
   },
 };
 
-const Switch = ({
+const CustomSwitch = ({
   value = false,
   className,
-  checkedIcon = <></>,
-  uncheckedIcon = <></>,
+  checkedIcon = null, // Removed <></> for null
+  uncheckedIcon = null, // Removed <></> for null
   onChange,
-
   size = "xs",
 }) => {
   const [selected, setSelected] = React.useState(value);
@@ -26,7 +24,7 @@ const Switch = ({
   };
   return (
     <div className={className}>
-      <SwitchProvider
+      <Switch
         checked={selected}
         onChange={handleChange}
         {...sizes[size]}
@@ -37,7 +35,7 @@ const Switch = ({
   );
 };
 
-Switch.propTypes = {
+CustomSwitch.propTypes = {
   value: PropTypes.bool,
   className: PropTypes.string,
   checkedIcon: PropTypes.node,
@@ -46,4 +44,4 @@ Switch.propTypes = {
   size: PropTypes.oneOf(["xs"]),
 };
 
-export { Switch };
+export { CustomSwitch as Switch }; // Exporting as CustomSwitch to avoid conflicts
