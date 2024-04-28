@@ -122,17 +122,17 @@ function LoginForm() {
                 />
             </div>
             {passwordError && <div className="text-red-500">{passwordError}</div>}
-            <a href="/home" className="mt-3.5 text-base text-sky-700">
+            <a href="/ " className="mt-3.5 text-base text-sky-700">
                 Forgot password?
             </a>
-            <button
-                type="submit"
-                className="justify-center items-center px-16 py-5 mt-14 font-semibold text-white whitespace-nowrap bg-blue-600 rounded-xl max-md:px-5 max-md:mt-10"
-            >
-                Login
-            </button>
-            <div className="self-center mt-5 text-base text-sky-700">
-                <span className="text-black">Don't have an account?</span> Sign up
+            
+            <button type="submit" className="sign-up-button">
+            Login
+             </button>
+          
+            <div className="self-center mt-5 text-base text-black flex items-center">
+            <span className="text-black">Don't have an account?</span>
+             <a href="/SignUp" className="ml-1 text-blue-600">Sign up</a>
             </div>
         </form>
     );
@@ -140,7 +140,7 @@ function LoginForm() {
 
 function MyComponent() {
     return (
-        <div className="flex flex-col px-5">
+        <> <div className="flex flex-col px-5">
             <div className="flex flex-col px-20 pt-6 pb-20 mt-5 w-full bg-gray-50 max-md:px-5 max-md:max-w-full">
                 <img
                     loading="lazy"
@@ -157,7 +157,17 @@ function MyComponent() {
                     </div>
                 </div>
             </div>
-        </div>
+            </div><style jsx>{`
+         .sign-up-button {
+            font-family: Inter, sans-serif;
+            border-radius: 10px;
+            background-color: rgba(50, 109, 230, 1);
+            color: #fff;
+            font-weight: 600;
+            padding: 18px;
+            cursor: pointer;
+          }
+        `}</style></>
     );
 }
 

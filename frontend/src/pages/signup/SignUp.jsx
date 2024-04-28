@@ -11,7 +11,7 @@ function Logo() {
     );
 }
 
-function LoginForm() {
+function SignUpForm() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -185,12 +185,9 @@ function LoginForm() {
             </div>
             {confirmPasswordError && <div className="text-red-500">{confirmPasswordError}</div>}
         
-            <button
-    type="submit"
-    className="justify-center items-center px-16 py-5 mt-14 font-semibold text-white whitespace-nowrap bg-blue-600 rounded-xl max-md:px-5 max-md:mt-10"
->
-    Sign Up
-</button>
+            <button type="submit" className="sign-up-button">
+               Sign up
+             </button>
 
 
             <div className="self-center mt-5 text-base text-black flex items-center">
@@ -207,25 +204,33 @@ function LoginForm() {
 
 function MyComponent() {
     return (
-        <div className="flex flex-col px-5">
+        <><div className="flex flex-col px-5">
             <div className="flex flex-col px-20 pt-6 pb-20 mt-5 w-full bg-gray-50 max-md:px-5 max-md:max-w-full">
                 <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e8a92ee1d1283fe4fcdd2cfa319abd64f26a6dcfb50e459f157a5d1ecb2dcf?apiKey=4231b80fdf894e88b435b645bef85a1d&"
                     alt="Decorative element"
-                    className="self-end aspect-square w-[29px]"
-                />
+                    className="self-end aspect-square w-[29px]" />
                 <div className="mb-1.5 max-w-full w-[846px]">
                     <div className="flex gap-5 max-md:flex-col max-md:gap-0">
                         <div className="flex flex-col w-[36%] max-md:ml-0 max-md:w-full" />
                         <div className="flex flex-col ml-5 w-[64%] max-md:ml-0 max-md:w-full">
-                            <LoginForm />
+                            <SignUpForm />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div><style jsx>{`
+         .sign-up-button {
+            font-family: Inter, sans-serif;
+            border-radius: 10px;
+            background-color: rgba(50, 109, 230, 1);
+            color: #fff;
+            font-weight: 600;
+            padding: 18px;
+            cursor: pointer;
+          }
+        `}</style></>
     );
 }
 
