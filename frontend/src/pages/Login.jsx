@@ -121,7 +121,7 @@ function LoginForm() {
         />
       </div>
       {passwordError && <div className="text-red-500">{passwordError}</div>}
-      <a href="/ " className="mx-3.5 my-3 text-base text-sky-700">
+      <a href="/ " className="mx-3.5 my-5 text-base text-sky-700">
         Forgot password?
       </a>
 
@@ -132,7 +132,7 @@ function LoginForm() {
       <div className="self-center mt-5 text-base text-black flex items-center">
         <span className="text-black">Don't have an account?</span>
         <a href="/SignUp" className="ml-1 text-blue-600">
-          Sign u
+          Sign up
         </a>
       </div>
     </form>
@@ -144,12 +144,6 @@ function MyComponent() {
     <>
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-col px-20 pt-6 pb-20 h-screen bg-gray-50 w-screen max-md: max-md:max-w-full">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e8a92ee1d1283fe4fcdd2cfa319abd64f26a6dcfb50e459f157a5d1ecb2dcf?apiKey=4231b80fdf894e88b435b645bef85a1d&"
-            alt="Decorative element"
-            className="self-end aspect-square w-[29px]"
-          />
           <div className="mb-1.5 max-w-full w-[846px]">
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               <div className="flex flex-col w-[36%] max-md:ml-0 max-md:w-full" />

@@ -201,7 +201,7 @@ function SignUpForm() {
         <div className="text-red-500">{confirmPasswordError}</div>
       )}
 
-      <button type="submit" className="sign-up-button">
+      <button type="submit" className="sign-up-button my-5">
         Sign up
       </button>
 
