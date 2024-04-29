@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css'; // Assurez-vous que ce fichier existe et contient vos styles CSS
 
-function App() {
+function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [username, setUsername] = useState('');
@@ -129,4 +129,4 @@ function App() {
   );
 }
 
-export default App;
+export default SignUp;

@@ -122,43 +122,50 @@ function LoginForm() {
                 />
             </div>
             {passwordError && <div className="text-red-500">{passwordError}</div>}
-            <a href="/home" className="mt-3.5 text-base text-sky-700">
+            <a href="/ " className="mt-3.5 text-base text-sky-700">
                 Forgot password?
             </a>
-            <button
-                type="submit"
-                className="justify-center items-center px-16 py-5 mt-14 font-semibold text-white whitespace-nowrap bg-blue-600 rounded-xl max-md:px-5 max-md:mt-10"
-            >
-                Login
-            </button>
-            <div className="self-center mt-5 text-base text-sky-700">
-                <span className="text-black">Don't have an account?</span> Sign up
+            
+            <button type="submit" className="sign-up-button">
+            Login
+             </button>
+          
+            <div className="self-center mt-5 text-base text-black flex items-center">
+            <span className="text-black">Don't have an account?</span>
+             <a href="/SignUp" className="ml-1 text-blue-600">Sign up</a>
             </div>
         </form>
     );
 }
 
-function MyComponent() {
+function Login() {
     return (
-        <div className="flex flex-col px-5">
-            <div className="flex flex-col px-20 pt-6 pb-20 mt-5 w-full bg-gray-50 max-md:px-5 max-md:max-w-full">
-                <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e8a92ee1d1283fe4fcdd2cfa319abd64f26a6dcfb50e459f157a5d1ecb2dcf?apiKey=4231b80fdf894e88b435b645bef85a1d&"
-                    alt="Decorative element"
-                    className="self-end aspect-square w-[29px]"
-                />
-                <div className="mb-1.5 max-w-full w-[846px]">
-                    <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                        <div className="flex flex-col w-[36%] max-md:ml-0 max-md:w-full" />
-                        <div className="flex flex-col ml-5 w-[64%] max-md:ml-0 max-md:w-full">
-                            <LoginForm />
-                        </div>
+        <> 
+            <div className="flex items-center justify-center h-screen bg-gray-100">
+                <div className="flex flex-col px-10 py-8 w-full max-w-xl bg-white rounded-lg shadow-lg">
+                    <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e8a92ee1d1283fe4fcdd2cfa319abd64f26a6dcfb50e459f157a5d1ecb2dcf?apiKey=4231b80fdf894e88b435b645bef85a1d&"
+                        alt="Decorative element"
+                        className="self-end aspect-square w-[29px]"
+                    />
+                    <div className="mt-8 flex flex-col items-center">
+                        <LoginForm />
                     </div>
                 </div>
             </div>
-        </div>
+        <style jsx>{`
+         .sign-up-button {
+            font-family: Inter, sans-serif;
+            border-radius: 10px;
+            background-color: rgba(50, 109, 230, 1);
+            color: #fff;
+            font-weight: 600;
+            padding: 18px;
+            cursor: pointer;
+          }
+        `}</style></>
     );
 }
 
-export default MyComponent;
+export default Login;
