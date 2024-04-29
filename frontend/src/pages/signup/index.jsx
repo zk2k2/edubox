@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+
+function SignUp() {
+
 function Logo() {
   return (
     <img
@@ -251,4 +254,7 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+
+export default SignUp;
+
+
