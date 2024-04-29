@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 
-
-function SignUp() {
-
 function Logo() {
   return (
     <img
@@ -217,24 +214,21 @@ function SignUpForm() {
     </form>
   );
 }
-//div
+
 function MyComponent() {
   return (
     <>
-      <div className="flex flex-col ">
-        <div className="flex flex-col w-full h-screen bg-gray-50 max-md:px-5 max-md:max-w-full">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e8a92ee1d1283fe4fcdd2cfa319abd64f26a6dcfb50e459f157a5d1ecb2dcf?apiKey=4231b80fdf894e88b435b645bef85a1d&"
-            alt="Decorative element"
-            className="self-end aspect-square w-[29px]"
-          />
-          <div className="mb-1.5 max-w-full w-[846px]">
-            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-              <div className="flex flex-col w-[36%] max-md:ml-0 max-md:w-full" />
-              <div className="flex flex-col ml-5 w-[64%] max-md:ml-0 max-md:w-full">
-                <SignUpForm />
-              </div>
+      <div className="flex flex-col justify-center items-center h-screen bg-gray-50 max-md:px-5 max-md:max-w-full">
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e8a92ee1d1283fe4fcdd2cfa319abd64f26a6dcfb50e459f157a5d1ecb2dcf?apiKey=4231b80fdf894e88b435b645bef85a1d&"
+          alt="Decorative element"
+          className="self-end aspect-square w-[29px]"
+        />
+        <div className="max-w-full w-[846px]">
+          <div className="flex gap-5 max-md:flex-col justify-center max-md:gap-0">
+            <div className="flex flex-col justify-center ml-5 w-[64%] max-md:ml-0 max-md:w-full">
+              <SignUpForm />
             </div>
           </div>
         </div>
@@ -254,7 +248,4 @@ function MyComponent() {
   );
 }
 
-
-export default SignUp;
-
-
+export default MyComponent;
