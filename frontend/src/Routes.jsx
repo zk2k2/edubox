@@ -18,6 +18,10 @@ const ProjectRoutes = () => {
       element: <WireframeOne />,
     },
     {
+      path: "Login",
+      element: <Login />,
+    },
+    {
       path: "user",
       element: <UserProfile />,
     },

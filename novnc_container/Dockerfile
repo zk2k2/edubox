@@ -26,5 +26,6 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 COPY . /app
+RUN apt install python3
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080
