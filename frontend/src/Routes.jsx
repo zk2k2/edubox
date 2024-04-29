@@ -30,11 +30,11 @@ const ProjectRoutes = () => {
       element: <WireframeFour />,
     },
     {
-      path: "signUp",
+      path: "signup",
       element: <SignUp />,
     },
     {
-      path: "Login",
+      path: "login",
       element: <Login />,
     },
   ]);
