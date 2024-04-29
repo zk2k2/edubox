@@ -47,7 +47,7 @@ function HeroSection() {
   );
 }
 
-function home() {
+function Home() {
   return (
     <>
       <div className="container">
@@ -258,4 +258,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;
