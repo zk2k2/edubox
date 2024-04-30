@@ -12,27 +12,39 @@ function Logo() {
 }
 
 function SignUpForm() {
-  const [username, setUsername] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); // State pour le champ de confirmation du mot de passe
-  const [usernameError, setUsernameError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState(""); // State pour l'erreur du champ de confirmation du mot de passe
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowconfirmPassword] = useState(false);
+  const [role, setRole] = useState("USER");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Fonction de validation pour le champ username
-    const validateUsername = (username) => {
-      if (username.trim() === "") {
-        setUsernameError("Username is required");
+    const validateFirstName = (firstname) => {
+      if (firstname.trim() === "") {
+        setFirstNameError("First name is required");
         return false;
       } else {
-        setUsernameError("");
+        setFirstNameError("");
+        return true;
+      }
+    };
+
+    const validateLastName = (lastname) => {
+      if (lastname.trim() === "") {
+        setLastNameError("Last name is required");
+        return false;
+      } else {
+        setLastNameError("");
         return true;
       }
     };
@@ -49,7 +61,6 @@ function SignUpForm() {
       }
     };
 
-    // Fonction de validation pour le champ password
     const validatePassword = (password) => {
       const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       if (!re.test(password)) {
@@ -73,27 +84,29 @@ function SignUpForm() {
       }
     };
 
-    // Vérifier la validation des champs
-    const isUsernameValid = validateUsername(username);
+    const isFirstNameValid = validateFirstName(firstname);
+    const isLastNameValid = validateLastName(lastname);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
     const isConfirmPasswordValid = validateConfirmPassword();
 
     const BACKEND_URL = "http://localhost:8080";
 
-    // Si tous les champs sont valides, envoyer la requête au backend
     if (
-      isUsernameValid &&
+      isFirstNameValid &&
+      isLastNameValid &&
       isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid
     ) {
       const authenticationRequest = {
-        username,
+        firstname,
+        lastname,
         email,
         password,
+        role,
       };
-      fetch(BACKEND_URL + "/api/v1/auth/authenticate", {
+      fetch(BACKEND_URL + "/api/v1/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,28 +126,43 @@ function SignUpForm() {
 
   return (
     <form
-      className="flex flex-col grow px-7 pt-8 pb-16 w-full text-xl bg-white-A700 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+      className="flex flex-col grow px-7 pt-8 pb-8 w-full text-xl bg-white-A700 max-md:px-5 max-md:mt-10 max-md:max-w-full"
       onSubmit={handleSubmit}
     >
       <Logo />
       <h1 className="text-center mt-11 text-5xl font-semibold text-sky-900 max-md:mt-10 max-md:text-4xl">
         Sign Up
       </h1>
-
       <div className="flex gap-5 justify-between px-4 py-4 mt-14 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-10">
-        <label htmlFor="username" className="sr-only">
-          Username
+        <label htmlFor="firstname" className="sr-only">
+          First Name
         </label>
         <input
           type="text"
-          id="username"
-          placeholder="Username"
-          aria-label="Username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          id="firstname"
+          placeholder="First name"
+          aria-label="Firstname"
+          value={firstname}
+          onChange={(event) => setFirstName(event.target.value)}
           className="w-full bg-transparent focus:outline-none"
         />
-        {usernameError && <div className="text-red-500">{usernameError}</div>}
+        {firstNameError && <div className="text-red-500">{firstNameError}</div>}
+      </div>
+
+      <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-7">
+        <label htmlFor="lastname" className="sr-only">
+          Last Name
+        </label>
+        <input
+          type="text"
+          id="lastname"
+          placeholder="Last Name"
+          aria-label="Lastname"
+          value={lastname}
+          onChange={(event) => setLastName(event.target.value)}
+          className="w-full bg-transparent focus:outline-none"
+        />
+        {lastNameError && <div className="text-red-500">{lastNameError}</div>}
       </div>
       <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5">
         <label htmlFor="email" className="sr-only">
@@ -215,7 +243,7 @@ function SignUpForm() {
   );
 }
 
-function MyComponent() {
+function SignUp() {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-screen bg-gray-50 max-md:px-5 max-md:max-w-full">
@@ -248,4 +276,4 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+export default SignUp;
