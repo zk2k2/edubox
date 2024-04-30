@@ -106,12 +106,17 @@ function SignUpForm() {
         password,
         role,
       };
+
+      const json = JSON.stringify(authenticationRequest);
+
+      console.log(authenticationRequest);
+
       fetch(BACKEND_URL + "/api/v1/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(authenticationRequest),
+        body: json,
       })
         .then((response) => response.json())
         .then((data) => {
