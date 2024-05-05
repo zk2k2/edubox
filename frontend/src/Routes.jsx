@@ -8,6 +8,7 @@ import WireframeTwo from "pages/WireframeTwo";
 import WireframeFour from "pages/WireframeFour";
 import SignUp from "pages/SignUp";
 import Login from "pages/Login";
+import Dashboard from "pages/Dashboard";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -40,6 +41,10 @@ const ProjectRoutes = () => {
     {
       path: "login",
       element: <Login />,
+    },
+    {
+      path: "dashboard",
+      element: <Dashboard />,
     },
   ]);
 

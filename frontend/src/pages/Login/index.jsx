@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function Logo() {
   return (
@@ -12,10 +12,10 @@ function Logo() {
 }
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event) => {
@@ -24,10 +24,10 @@ function LoginForm() {
     const validateEmail = (email) => {
       const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!re.test(email)) {
-        setEmailError("Invalid email address");
+        setEmailError('Invalid email address');
         return false;
       } else {
-        setEmailError("");
+        setEmailError('');
         return true;
       }
     };
@@ -36,11 +36,11 @@ function LoginForm() {
       const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       if (!re.test(password)) {
         setPasswordError(
-          "Password must be at least 8 characters long and contain at least one letter and one number"
+          'Password must be at least 8 characters long and contain at least one letter and one number'
         );
         return false;
       } else {
-        setPasswordError("");
+        setPasswordError('');
         return true;
       }
     };
@@ -48,24 +48,24 @@ function LoginForm() {
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
-    const BACKEND_URL = "http://localhost:8080";
+    const BACKEND_URL = 'http://localhost:8080';
 
     if (isEmailValid && isPasswordValid) {
       const authenticationRequest = {
         email,
         password,
       };
-      fetch(BACKEND_URL + "/api/v1/auth/authenticate", {
-        method: "POST",
+      fetch(BACKEND_URL + '/api/v1/auth/authenticate', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(authenticationRequest),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          window.location.href = "/";
+          window.location.href = '/dashboard';
         })
         .catch((error) => {
           console.log(error);
@@ -86,8 +86,8 @@ function LoginForm() {
 
         <div className="flex gap-5 justify-between px-4 py-4 mt-14 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-10">
           <label htmlFor="email" className="sr-only">
-            {" "}
-            Email{" "}
+            {' '}
+            Email{' '}
           </label>
           <input
             type="email"
@@ -105,7 +105,7 @@ function LoginForm() {
             Password
           </label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             placeholder="Password"
             aria-label="Password"
@@ -119,7 +119,7 @@ function LoginForm() {
             alt="Toggle password visibility"
             className="shrink-0 self-start aspect-square w-[26px]"
             onClick={() => setShowPassword(!showPassword)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           />
         </div>
         {passwordError && <div className="text-red-500">{passwordError}</div>}
