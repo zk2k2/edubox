@@ -65,4 +65,13 @@ public class UserService {
     public void deleteUser(UUID userId) {
         repository.deleteById(userId);
     }
+
+    public String getCurrentUserId(Principal connectedUser) {
+        if (connectedUser == null) {
+            throw new IllegalArgumentException("Connected user principal cannot be null");
+        }
+        // Assuming connectedUser is an instance of UsernamePasswordAuthenticationToken
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        return user.getEmail(); // Assuming User object has a method getId() which returns UUID
+    }
 }

@@ -1,11 +1,53 @@
-import React from "react";
+import React, {useState} from "react";
 import { Helmet } from "react-helmet";
 import { Button, Input, Text, Img, Heading } from "../../components";
 import Header from "../../components/Header";
 import { MenuItem, Menu, Sidebar } from "react-pro-sidebar";
+import Cookies from 'js-cookie';
 
 export default function WireframeThreePage() {
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
+  let userId;
+
+  const getToken = () => Cookies.get('token');
+
+  const toggleButtons = () => {
+    setShowButtons(!showButtons);
+  };
+
+  alert(getToken());
+  const BACKEND_URL = "http://localhost:8080";
+  fetch("http://localhost:8080/api/v1/users/currentuserid", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${getToken}`,
+      "Content-Type": "application/json", // Adjust content type as needed
+    },
+  })
+      .then((response) => {
+        alert(response.status)
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        alert("response ");
+        const r = response.clone();
+        response.text().then(text => {
+          alert(text); // Alert the text content of the response
+        });
+        return r.json();
+      })
+      .then((data) => {
+        alert("here3");
+        userId = data.userId; // Assign userId from the response data
+        console.log(userId); // Optional: Log the userId
+        alert(userId);
+      })
+      .catch((error) => {
+        alert(error);
+        console.error("There was a problem with the fetch operation:", error);
+      });
 
   //use this function to collapse/expand the sidebar
   //function collapseSidebar() {
@@ -116,7 +158,7 @@ export default function WireframeThreePage() {
                   </div>
                   <div className="flex flex-col items-start gap-1.5">
                     <Heading size="md" as="h1">
-                      Zied Kharrat
+                      {userId ? userId : "Loading..."}
                     </Heading>
                     <Text as="p" className="!text-blue_gray-700">
                       Administrator
@@ -130,30 +172,50 @@ export default function WireframeThreePage() {
                     <Heading size="s" as="h2">
                       Profile details
                     </Heading>
+                    <div className="flex">
+                    <div className="flex">
+                      <button
+                          className={`sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px] flex items-center justify-center text-center cursor-pointer h-[42px] px-[35px] text-lg bg-gray-400 text-white-A700 mr-2`}
+                          style={{display: showButtons ? 'none' : 'block'}}
+                          onClick={toggleButtons}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                          className={`sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px] flex items-center justify-center text-center cursor-pointer h-[42px] px-[35px] text-lg bg-blue-500 text-white-A700`}
+                          style={{display: showButtons ? 'none' : 'block'}}
+                          onClick={toggleButtons}
+                      >
+                        Confirm
+                      </button>
+                    </div>
                     <Img
-                      src="images/img_edit.png"
-                      alt="edit_one"
-                      className="self-end w-[28px] object-cover"
+                        src="images/img_edit.png"
+                        alt="edit_one"
+                        className="self-end w-[28px] object-cover"
+                        style={{display: showButtons ? 'block' : 'none'}}
+                        onClick={toggleButtons}
                     />
+                    </div>
                   </div>
                   <div className="flex md:flex-col justify-center items-center gap-[30px]">
                     <div className="flex flex-col md:self-stretch gap-[23px] flex-1">
                       <div className="flex flex-col items-start gap-[7px]">
                         <Text as="p">Name</Text>
                         <Input
-                          shape="round"
-                          name="name"
-                          placeholder={`Zied`}
-                          className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            shape="round"
+                            name="name"
+                            placeholder={`Zied`}
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
                         />
                       </div>
                       <div className="flex flex-col items-start gap-1.5">
                         <Text as="p">Surname</Text>
                         <Input
-                          shape="round"
-                          name="surname"
-                          placeholder={`Kharrat`}
-                          className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            shape="round"
+                            name="surname"
+                            placeholder={`Kharrat`}
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
                         />
                       </div>
                       <div className="flex flex-col items-start gap-[7px]">
@@ -217,6 +279,8 @@ export default function WireframeThreePage() {
                         color="red_A700"
                         size="sm"
                         className="w-full mt-[55px] sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px]"
+                        style={{display: showButtons ? 'none' : 'block'}}
+                        onClick={toggleButtons}
                       >
                         Delete my account
                       </Button>

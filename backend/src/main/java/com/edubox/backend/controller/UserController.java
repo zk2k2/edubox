@@ -31,6 +31,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/currentuserid")
+    public ResponseEntity<String> getCurrentUserId(Principal connectedUser) {
+        String id = service.getCurrentUserId(connectedUser);
+        return ResponseEntity.ok(id);
+    }
+
     // POST /api/v1/users - Create a new user
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
