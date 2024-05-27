@@ -215,7 +215,7 @@ function SignUpForm() {
   );
 }
 
-function MyComponent() {
+function SignUp() {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-screen bg-gray-50 max-md:px-5 max-md:max-w-full">
@@ -248,4 +248,4 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+export default SignUp;

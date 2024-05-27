@@ -1,0 +1,2 @@
+git clone https://github.com/yassine258/Alpine_xfce4_noVNC.git BaseImages/alpine
+git clone https://github.com/chenjr0719/Docker-Ubuntu-Unity-noVNC.git BaseImages/ubuntu
