@@ -1,1 +1,2 @@
 vm_backend/Api/vmenv/* linguist-vendored
+*.py linguist-vendored
