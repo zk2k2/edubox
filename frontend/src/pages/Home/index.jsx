@@ -1,5 +1,5 @@
-import * as React from "react";
-import "./style.css";
+import * as React from 'react';
+import './style.css';
 
 function Header() {
   return (
@@ -19,15 +19,15 @@ function HeroSection() {
   return (
     <section className="hero-section">
       <div className="hero-content">
-        <h1 className="hero-title">
+        <h1 className="hero-title fade-in">
           Your home for instant <br /> code deployment, and more...
         </h1>
-        <p className="hero-description">
+        <p className="hero-description fade-in-delayed">
           Welcome to EduBox, here we provide you with a platform to deploy
           Virtual Machines to run your code, run bash scripts, and more!
         </p>
         <a href="/Login">
-          <button className="cta-button">
+          <button className="cta-button fade-in-delayed-2s ">
             <span className="cta-text">Get started</span>
             <img
               loading="lazy"
@@ -38,12 +38,12 @@ function HeroSection() {
           </button>
         </a>
       </div>
-      <div className="hero-image-container">
+      <div className="hero-image-container ">
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/87262d6b197322c5734534fc59437f5bd022da0a6e650c0dd6594b67f134df9a?apiKey=f0567170fbe140ca8ae93d451355cc9e&"
-          alt="Hero image"
-          className="hero-image"
+          src="images/welcome-image.png"
+          alt="welcome"
+          className="hero-image fade-in-delayed-2s"
         />
       </div>
     </section>
@@ -162,37 +162,7 @@ function Home() {
           color: #000;
           font: 400 26px Inter, sans-serif;
           margin-top: 61px;
-        }
-        .cta-button {
-          display: inline-block;
-          padding: 10px 20px;
-          background-color: #007bff; /* Couleur de fond du bouton */
-          color: #fff; /* Couleur du texte */
-          text-decoration: none;
-          border-radius: 5px;
-          transition: background-color 0.3s ease; /* Transition de la couleur de fond */
-          cursor: pointer; /* Définir le curseur comme une main par défaut */
-        }
-
-        .cta-button:hover {
-          background-color: #0056b3; /* Nouvelle couleur de fond au survol */
-        }
-
-        .cta-text {
-          margin-right: 10px;
-        }
-
-        .cta-icon {
-          width: 20px; /* Taille de l'icône */
-          height: 20px;
-          vertical-align: middle;
-        }
-
-        @media (max-width: 991px) {
-          .hero-description {
-            margin-top: 40px;
-            max-width: 100%;
-          }
+          opacity: 0;
         }
 
         .cta-button {
@@ -205,13 +175,11 @@ function Home() {
           gap: 15px;
           margin-top: 46px;
           padding: 13px 47px;
+          opacity: 0;
         }
 
-        @media (max-width: 991px) {
-          .cta-button {
-            margin-top: 40px;
-            padding: 0 20px;
-          }
+        .cta-button:hover {
+          background-color: #0056b3;
         }
 
         .cta-text {
@@ -248,6 +216,7 @@ function Home() {
           flex-grow: 1;
           object-fit: auto;
           object-position: center;
+          opacity: 0;
         }
 
         @media (max-width: 991px) {
@@ -255,6 +224,38 @@ function Home() {
             margin-top: 40px;
             max-width: 100%;
           }
+        }
+
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        @keyframes fadeInDelayed {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        .fade-in {
+          animation: fadeIn 1s ease-in-out;
+        }
+
+        .fade-in-delayed {
+          animation: fadeInDelayed 1s ease-in-out forwards;
+          animation-delay: 1s;
+        }
+
+        .fade-in-delayed-2s {
+          animation: fadeInDelayed 1s ease-in-out forwards;
+          animation-delay: 2s;
         }
       `}</style>
     </>

@@ -9,6 +9,7 @@ import WireframeFour from 'pages/WireframeFour';
 import SignUp from 'pages/SignUp';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
+import DeployVM from 'pages/DeployVM';
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -45,6 +46,10 @@ const ProjectRoutes = () => {
     {
       path: 'dashboard',
       element: <Dashboard />,
+    },
+    {
+      path: 'deploy-vm',
+      element: <DeployVM />,
     },
   ]);
 

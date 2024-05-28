@@ -195,11 +195,11 @@ export default function DeployVM() {
                           shape="round"
                           name="java"
                           options={[
-                            { value: 'java8', label: 'Java 8' },
-                            { value: 'java17', label: 'Java 17' },
-                            { value: 'java21', label: 'Java 21' },
+                            { value: 'python3', label: 'Python 3' },
+                            { value: 'python2', label: 'Python 2' },
+                            { value: 'python1', label: 'Python 1' },
                           ]}
-                          placeholder="Select Java installation"
+                          placeholder="Select Python installation (optional)"
                           className="self-stretch border-black-900_26 !pr-0 pl-3 border border-solid"
                         />
                       </div>
@@ -216,7 +216,7 @@ export default function DeployVM() {
                             { value: 'java17', label: 'Java 17' },
                             { value: 'java21', label: 'Java 21' },
                           ]}
-                          placeholder="Select Node.js installation"
+                          placeholder="Select Node.js installation (optional)"
                           className="self-stretch border-black-900_26 !pr-0 pl-3 border border-solid"
                         />
                       </div>
@@ -230,7 +230,7 @@ export default function DeployVM() {
                             { value: 'java17', label: 'Java 17' },
                             { value: 'java21', label: 'Java 21' },
                           ]}
-                          placeholder="Select Java installation"
+                          placeholder="Select Java installation (optional)"
                           className="self-stretch border-black-900_26 !pr-0 pl-3 border border-solid"
                         />
                       </div>
