@@ -1,5 +1,5 @@
 # Use a base image with Eclipse Temurin JDK 17 on Alpine Linux
-FROM eclipse-temurin:17-jdk-alpine
+FROM yannoff/maven:3.8.5-openjdk-17-alpine
 
 # Set the working directory inside the container
 WORKDIR /app

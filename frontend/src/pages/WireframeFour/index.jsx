@@ -15,11 +15,8 @@ export default function WireframeFourPage() {
   return (
     <>
       <Helmet>
-        <title>Yassine's Application1</title>
-        <meta
-          name="description"
-          content="Web site created using create-react-app"
-        />
+        <title>Edubox</title>
+        <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
       <div className="w-full bg-gray-50">
         <div className="flex flex-col">

@@ -51,7 +51,6 @@ export default function WireframeOnePage() {
   const [searchBarValue1, setSearchBarValue1] = React.useState("");
   const [collapsed, setCollapsed] = React.useState(false);
   useEffect(() => {
-    const token = "your_token_here"; // Replace with your actual token
     fetch(process.env.URL_BACKEND + "/ListVm", {
       headers: {
         Authorization: `Bearer ${token}`,
