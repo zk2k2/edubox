@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Img, Input } from "./..";
-import "./style.css";
+import React from 'react';
+import { Button, Img, Input } from './..';
+import './style.css';
 
 export default function Header({ ...props }) {
   return (
@@ -18,7 +18,7 @@ export default function Header({ ...props }) {
             name="search"
             placeholder={`Search for Virtual Machines, users, and more...`}
             className="w-[64%] md:w-full sm:px-5 rounded-[10px] input"
-            style={{ "::placeholder": { color: "red" } }} // Change the placeholder color here
+            style={{ '::placeholder': { color: 'red' } }} // Change the placeholder color here
           />
         </div>
         <Button

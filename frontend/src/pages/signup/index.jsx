@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function Logo() {
   return (
@@ -12,27 +12,39 @@ function Logo() {
 }
 
 function SignUpForm() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // State pour le champ de confirmation du mot de passe
-  const [usernameError, setUsernameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState(""); // State pour l'erreur du champ de confirmation du mot de passe
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // State pour le champ de confirmation du mot de passe
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState(''); // State pour l'erreur du champ de confirmation du mot de passe
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowconfirmPassword] = useState(false);
+  const [role, setRole] = useState('USER');
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Fonction de validation pour le champ username
-    const validateUsername = (username) => {
-      if (username.trim() === "") {
-        setUsernameError("Username is required");
+    const validateFirstName = (firstname) => {
+      if (firstname.trim() === '') {
+        setFirstNameError('First name is required');
         return false;
       } else {
-        setUsernameError("");
+        setFirstNameError('');
+        return true;
+      }
+    };
+
+    const validateLastName = (lastname) => {
+      if (lastname.trim() === '') {
+        setLastNameError('Last name is required');
+        return false;
+      } else {
+        setLastNameError('');
         return true;
       }
     };
@@ -41,69 +53,75 @@ function SignUpForm() {
     const validateEmail = (email) => {
       const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!re.test(email)) {
-        setEmailError("Invalid email address");
+        setEmailError('Invalid email address');
         return false;
       } else {
-        setEmailError("");
+        setEmailError('');
         return true;
       }
     };
 
-    // Fonction de validation pour le champ password
     const validatePassword = (password) => {
       const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       if (!re.test(password)) {
         setPasswordError(
-          "Password must be at least 8 characters long and contain at least one letter and one number"
+          'Password must be at least 8 characters long and contain at least one letter and one number'
         );
         return false;
       } else {
-        setPasswordError("");
+        setPasswordError('');
         return true;
       }
     };
 
     const validateConfirmPassword = () => {
       if (confirmPassword !== password) {
-        setConfirmPasswordError("Passwords do not match");
+        setConfirmPasswordError('Passwords do not match');
         return false;
       } else {
-        setConfirmPasswordError("");
+        setConfirmPasswordError('');
         return true;
       }
     };
 
-    // Vérifier la validation des champs
-    const isUsernameValid = validateUsername(username);
+    const isFirstNameValid = validateFirstName(firstname);
+    const isLastNameValid = validateLastName(lastname);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
     const isConfirmPasswordValid = validateConfirmPassword();
 
-    const BACKEND_URL = "http://localhost:8080";
+    const BACKEND_URL = 'http://localhost:8080';
 
-    // Si tous les champs sont valides, envoyer la requête au backend
     if (
-      isUsernameValid &&
+      isFirstNameValid &&
+      isLastNameValid &&
       isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid
     ) {
       const authenticationRequest = {
-        username,
+        firstname,
+        lastname,
         email,
         password,
+        role,
       };
-      fetch(BACKEND_URL + "/api/v1/auth/authenticate", {
-        method: "POST",
+
+      const json = JSON.stringify(authenticationRequest);
+
+      console.log(authenticationRequest);
+
+      fetch(BACKEND_URL + '/api/v1/auth/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(authenticationRequest),
+        body: json,
       })
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          window.location.href = "/";
+          window.location.href = '/dashboard';
         })
         .catch((error) => {
           console.log(error);
@@ -113,28 +131,43 @@ function SignUpForm() {
 
   return (
     <form
-      className="flex flex-col grow px-7 pt-8 pb-16 w-full text-xl bg-white-A700 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+      className="flex flex-col grow px-7 pt-8 pb-8 w-full text-xl bg-white-A700 max-md:px-5 max-md:mt-10 max-md:max-w-full"
       onSubmit={handleSubmit}
     >
       <Logo />
       <h1 className="text-center mt-11 text-5xl font-semibold text-sky-900 max-md:mt-10 max-md:text-4xl">
         Sign Up
       </h1>
-
       <div className="flex gap-5 justify-between px-4 py-4 mt-14 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-10">
-        <label htmlFor="username" className="sr-only">
-          Username
+        <label htmlFor="firstname" className="sr-only">
+          First Name
         </label>
         <input
           type="text"
-          id="username"
-          placeholder="Username"
-          aria-label="Username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          id="firstname"
+          placeholder="First name"
+          aria-label="Firstname"
+          value={firstname}
+          onChange={(event) => setFirstName(event.target.value)}
           className="w-full bg-transparent focus:outline-none"
         />
-        {usernameError && <div className="text-red-500">{usernameError}</div>}
+        {firstNameError && <div className="text-red-500">{firstNameError}</div>}
+      </div>
+
+      <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-7">
+        <label htmlFor="lastname" className="sr-only">
+          Last Name
+        </label>
+        <input
+          type="text"
+          id="lastname"
+          placeholder="Last Name"
+          aria-label="Lastname"
+          value={lastname}
+          onChange={(event) => setLastName(event.target.value)}
+          className="w-full bg-transparent focus:outline-none"
+        />
+        {lastNameError && <div className="text-red-500">{lastNameError}</div>}
       </div>
       <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5">
         <label htmlFor="email" className="sr-only">
@@ -156,7 +189,7 @@ function SignUpForm() {
           Password
         </label>
         <input
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           id="password"
           placeholder="Password"
           aria-label="Password"
@@ -170,7 +203,7 @@ function SignUpForm() {
           alt="Toggle password visibility"
           className="shrink-0 self-start aspect-square w-[26px]"
           onClick={() => setShowPassword(!showPassword)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
         />
       </div>
       {passwordError && <div className="text-red-500">{passwordError}</div>}
@@ -180,7 +213,7 @@ function SignUpForm() {
           Confirm Password
         </label>
         <input
-          type={showconfirmPassword ? "text" : "password"}
+          type={showconfirmPassword ? 'text' : 'password'}
           id="confirmPassword"
           placeholder="Confirm Password"
           aria-label="Confirm Password"
@@ -194,7 +227,7 @@ function SignUpForm() {
           alt="Toggle password visibility"
           className="shrink-0 self-start aspect-square w-[26px]"
           onClick={() => setShowconfirmPassword(!showconfirmPassword)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
         />
       </div>
       {confirmPasswordError && (

@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./style.css";
 
 function Header() {
   return (
@@ -25,15 +26,17 @@ function HeroSection() {
           Welcome to EduBox, here we provide you with a platform to deploy
           Virtual Machines to run your code, run bash scripts, and more!
         </p>
-        <button className="cta-button">
-          <span className="cta-text">Get started</span>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/94e0f740e45ad4d502757752260195dab9c7bb7b057572a5c5b53530075cc265?apiKey=f0567170fbe140ca8ae93d451355cc9e&"
-            alt="Right arrow icon"
-            className="cta-icon"
-          />
-        </button>
+        <a href="/Login">
+          <button className="cta-button">
+            <span className="cta-text">Get started</span>
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/94e0f740e45ad4d502757752260195dab9c7bb7b057572a5c5b53530075cc265?apiKey=f0567170fbe140ca8ae93d451355cc9e&"
+              alt="Right arrow icon"
+              className="cta-icon"
+            />
+          </button>
+        </a>
       </div>
       <div className="hero-image-container">
         <img

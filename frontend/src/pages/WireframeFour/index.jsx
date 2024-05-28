@@ -1,8 +1,8 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import { Button, Input, Text, Img, Heading } from "../../components";
-import Header from "../../components/Header";
-import { MenuItem, Menu, Sidebar } from "react-pro-sidebar";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { Button, Input, Text, Img, Heading } from '../../components';
+import Header from '../../components/Header';
+import { MenuItem, Menu, Sidebar } from 'react-pro-sidebar';
 
 export default function WireframeFourPage() {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -26,49 +26,74 @@ export default function WireframeFourPage() {
               width="282px !important"
               collapsedWidth="80px !important"
               collapsed={collapsed}
-              className="flex flex-col h-screen top-0 p-6 sm:p-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
+              className="flex flex-col h-screen top-0 py-[50px] md:py-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
             >
               <Menu
                 menuItemStyles={{
                   button: {
-                    padding: 0,
-                    gap: "22px",
-                    alignSelf: "start",
-                    color: "#505968",
+                    padding: '12px',
+                    gap: '22px',
+                    alignSelf: 'start',
+                    color: '#505968',
                     fontWeight: 400,
-                    fontSize: "20px",
-                    paddingTop: "4px",
-                    paddingBottom: "4px",
-                    [`&:hover, &.ps-active`]: { color: "#000000", fontWeight: "500 !important" },
+                    fontSize: '20px',
                   },
                 }}
-                rootStyles={{ ["&>ul"]: { gap: "0.93px" } }}
-                className="flex flex-col w-full mt-[26px] mb-[295px]"
+                rootStyles={{ ['&>ul']: { gap: '0.93px' } }}
+                className="flex flex-col w-full mb-[269px] pb-[22px] sm:pb-5"
               >
                 <MenuItem
                   icon={
-                    <Img src="images/img_sandbox.png" alt="sandbox_one" className="h-[41px] w-[41px] object-cover" />
+                    <Img
+                      src="images/img_sandbox.png"
+                      alt="sandbox_one"
+                      className="h-[41px] w-[41px] object-cover"
+                    />
                   }
                 >
                   Virtual Machines
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_group.png" alt="image" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_group.png"
+                      alt="image"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   User Management
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_user_1.png" alt="user_one" className="h-[28px] w-[28px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_user_1.png"
+                      alt="user_one"
+                      className="h-[28px] w-[28px] object-cover"
+                    />
+                  }
                 >
                   My Account
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_info.png" alt="info_one" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_info.png"
+                      alt="info_one"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   Assistance
                 </MenuItem>
                 <MenuItem
-                  icon={<Img src="images/img_gear.png" alt="gear_one" className="h-[32px] w-[32px] object-cover" />}
+                  icon={
+                    <Img
+                      src="images/img_gear.png"
+                      alt="gear_one"
+                      className="h-[32px] w-[32px] object-cover"
+                    />
+                  }
                 >
                   Settings
                 </MenuItem>
@@ -76,14 +101,28 @@ export default function WireframeFourPage() {
             </Sidebar>
             <div className="md:self-stretch flex-1">
               <div className="flex flex-col gap-2">
-                <div className="flex p-2 bg-white-A700">
+                <div className="flex p-2 bg-white-A700 my-5">
                   <div className="flex flex-col w-[56%] md:w-full mt-1.5 ml-[13px] gap-[15px] md:ml-0">
-                    <div className="flex items-start ml-[5px] gap-[5px] md:ml-0 flex-wrap">
-                      <Text size="s" as="p" className="!text-blue-A700">
+                    <div className="flex items-start ml-[5px] gap-[5px] md:ml-0 flex-wrap pt-3">
+                      <Text
+                        size="s"
+                        as="p"
+                        className="!text-blue-A700 !font-medium"
+                      >
                         Virtual Machines
                       </Text>
-                      <Img src="images/img_forward.png" alt="forward_one" className="w-[14px] object-cover" />
-                      <Text size="s" as="p" className="!text-blue-A700">
+                      <Text
+                        size="s"
+                        as="p"
+                        className="!text-blue-A700 !font-medium"
+                      >
+                        {'>'}
+                      </Text>
+                      <Text
+                        size="s"
+                        as="p"
+                        className="!text-blue-A700 !font-medium"
+                      >
                         Deploy a new virtual machine
                       </Text>
                     </div>
@@ -168,7 +207,13 @@ export default function WireframeFourPage() {
                                 type="password"
                                 name="password"
                                 placeholder={`••••••••••••••`}
-                                suffix={<Img src="images/img_eye.png" alt="Eye" className="w-[23px] h-[23px]" />}
+                                suffix={
+                                  <Img
+                                    src="images/img_eye.png"
+                                    alt="Eye"
+                                    className="w-[23px] h-[23px]"
+                                  />
+                                }
                                 className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
                               />
                             </div>
