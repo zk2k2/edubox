@@ -1,14 +1,14 @@
-
-import React from "react";
-import { useRoutes } from "react-router-dom";
-import Home from "pages/Home";
-import NotFound from "pages/NotFound";
-import WireframeOne from "pages/WireframeOne";
-import UserProfile from "pages/UserProfile";
-import AdminView from "pages/AdminView";
-import WireframeFour from "pages/WireframeFour";
-import SignUp from "pages/signup";
-import Login from "pages/Login";
+import React from 'react';
+import { useRoutes } from 'react-router-dom';
+import Home from 'pages/Home';
+import NotFound from 'pages/NotFound';
+import WireframeOne from 'pages/WireframeOne';
+import UserProfile from 'pages/UserProfile';
+import AdminView from 'pages/AdminView';
+import WireframeFour from 'pages/WireframeFour';
+import SignUp from 'pages/SignUp';
+import Dashboard from 'pages/Dashboard';
+import Login from 'pages/Login';
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -27,10 +27,8 @@ const ProjectRoutes = () => {
       element: <UserProfile />,
     },
     {
-
-      path: "AdminView",
+      path: 'AdminView',
       element: <AdminView />,
-
     },
     {
       path: 'wireframefour',

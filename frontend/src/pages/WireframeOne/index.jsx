@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet";
-import { CloseSVG } from "../../assets/images";
+import { Helmet } from 'react-helmet';
+import { CloseSVG } from '../../assets/images';
 import {
   Img,
   Text,
@@ -8,67 +8,68 @@ import {
   Switch,
   Button,
   Input,
-} from "../../components";
-import Header from "../../components/Header";
-import { ReactTable } from "../../components/ReactTable";
-import { createColumnHelper } from "@tanstack/react-table";
-import { MenuItem, Menu, Sidebar } from "react-pro-sidebar";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+} from '../../components';
+import Header from '../../components/Header';
+import { ReactTable } from '../../components/ReactTable';
+import { createColumnHelper } from '@tanstack/react-table';
+import { MenuItem, Menu, Sidebar } from 'react-pro-sidebar';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 const tableData = [
   {
-    name: "myvm-32",
-    operating: "images/img_windows_10.png",
-    status: "Running",
-    cpu: "8%",
-    ports: "8080",
-    laststarted: "3 hours ago",
-    actions: "images/img_stop.png",
+    name: 'myvm-32',
+    operating: 'images/img_windows_10.png',
+    status: 'Running',
+    cpu: '8%',
+    ports: '8080',
+    laststarted: '3 hours ago',
+    actions: 'images/img_stop.png',
   },
   {
-    name: "myvm-32",
-    operating: "images/img_windows_10.png",
-    status: "Running",
-    cpu: "4%",
-    ports: "8081",
-    laststarted: "3 hours ago",
-    actions: "images/img_stop.png",
+    name: 'myvm-32',
+    operating: 'images/img_windows_10.png',
+    status: 'Running',
+    cpu: '4%',
+    ports: '8081',
+    laststarted: '3 hours ago',
+    actions: 'images/img_stop.png',
   },
   {
-    name: "myvm-32",
-    operating: "images/img_windows_10.png",
-    status: "Stopped",
-    cpu: "12%",
-    ports: "8090",
-    laststarted: "3 hours ago",
-    actions: "images/img_stop.png",
+    name: 'myvm-32',
+    operating: 'images/img_windows_10.png',
+    status: 'Stopped',
+    cpu: '12%',
+    ports: '8090',
+    laststarted: '3 hours ago',
+    actions: 'images/img_stop.png',
   },
 ];
 
 export default function WireframeOnePage() {
   const [tableVm, setTableVm] = useState([]);
   const [showRunningOnly, setShowRunningOnly] = useState(false);
-  const [searchBarValue1, setSearchBarValue1] = React.useState("");
+  const [searchBarValue1, setSearchBarValue1] = React.useState('');
   const [collapsed, setCollapsed] = React.useState(false);
+  const token = localStorage.getItem('token');
   useEffect(() => {
-    fetch(process.env.URL_BACKEND + "/ListVm", {
+    fetch(process.env.URL_BACKEND + '/ListVm', {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json", // Adjust content type as needed
+        'Content-Type': 'application/json', // Adjust content type as needed
       },
     })
       .then((response) => response.json())
       .then((data) => {
         if (showRunningOnly) {
           // Show only running VMs
-          const runningVMs = data.filter((item) => item.status === "Running");
+          const runningVMs = data.filter((item) => item.status === 'Running');
 
           setTableVm(runningVMs);
         } else {
           // Show all VMs
           setTableVm(data);
         }
-        if (searchBarValue1 !== "") {
+        if (searchBarValue1 !== '') {
           const filteredData = tableVm.filter((item) =>
             item.name
               .toLowerCase()
@@ -78,7 +79,7 @@ export default function WireframeOnePage() {
           setTableVm(filteredData);
         }
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error('Error fetching data:', error));
     // To remove just for test
     setTableVm(tableData);
   }, []);
@@ -91,7 +92,7 @@ export default function WireframeOnePage() {
   const tableColumns = React.useMemo(() => {
     const tableColumnHelper = createColumnHelper();
     return [
-      tableColumnHelper.accessor("rowsquareninety", {
+      tableColumnHelper.accessor('rowsquareninety', {
         cell: (info) => (
           <div className="flex">
             <CheckBox
@@ -112,9 +113,9 @@ export default function WireframeOnePage() {
             />
           </div>
         ),
-        meta: { width: "49px" },
+        meta: { width: '49px' },
       }),
-      tableColumnHelper.accessor("name", {
+      tableColumnHelper.accessor('name', {
         cell: (info) => (
           <div className="flex items-start gap-1">
             <Img
@@ -132,9 +133,9 @@ export default function WireframeOnePage() {
             Name
           </Heading>
         ),
-        meta: { width: "147px" },
+        meta: { width: '147px' },
       }),
-      tableColumnHelper.accessor("operating", {
+      tableColumnHelper.accessor('operating', {
         cell: (info) => (
           <div className="flex">
             <Img
@@ -149,9 +150,9 @@ export default function WireframeOnePage() {
             Operating System
           </Heading>
         ),
-        meta: { width: "194px" },
+        meta: { width: '194px' },
       }),
-      tableColumnHelper.accessor("status", {
+      tableColumnHelper.accessor('status', {
         cell: (info) => (
           <Text as="p" className="!text-blue-A700">
             {info?.getValue?.()}
@@ -162,9 +163,9 @@ export default function WireframeOnePage() {
             Status
           </Heading>
         ),
-        meta: { width: "123px" },
+        meta: { width: '123px' },
       }),
-      tableColumnHelper.accessor("cpu", {
+      tableColumnHelper.accessor('cpu', {
         cell: (info) => (
           <Text as="p" className="!text-teal-300">
             {info?.getValue?.()}
@@ -175,27 +176,27 @@ export default function WireframeOnePage() {
             CPU (%)
           </Heading>
         ),
-        meta: { width: "123px" },
+        meta: { width: '123px' },
       }),
-      tableColumnHelper.accessor("ports", {
+      tableColumnHelper.accessor('ports', {
         cell: (info) => <Text as="p">{info?.getValue?.()}</Text>,
         header: (info) => (
           <Heading as="h5" className="p-px">
             Port(s)
           </Heading>
         ),
-        meta: { width: "123px" },
+        meta: { width: '123px' },
       }),
-      tableColumnHelper.accessor("laststarted", {
+      tableColumnHelper.accessor('laststarted', {
         cell: (info) => <Text as="p">{info?.getValue?.()}</Text>,
         header: (info) => (
           <Heading as="h6" className="p-px">
             Last started
           </Heading>
         ),
-        meta: { width: "146px" },
+        meta: { width: '146px' },
       }),
-      tableColumnHelper.accessor("actions", {
+      tableColumnHelper.accessor('actions', {
         cell: (info) => (
           <div className="flex items-start">
             <Img
@@ -220,7 +221,7 @@ export default function WireframeOnePage() {
             Actions
           </Heading>
         ),
-        meta: { width: "104px" },
+        meta: { width: '104px' },
       }),
     ];
   }, []);
@@ -247,15 +248,15 @@ export default function WireframeOnePage() {
               <Menu
                 menuItemStyles={{
                   button: {
-                    padding: "12px", // Adjust padding to increase vertical spacing
-                    gap: "22px",
-                    alignSelf: "start",
-                    color: "#505968",
+                    padding: '12px', // Adjust padding to increase vertical spacing
+                    gap: '22px',
+                    alignSelf: 'start',
+                    color: '#505968',
                     fontWeight: 400,
-                    fontSize: "20px",
+                    fontSize: '20px',
                   },
                 }}
-                rootStyles={{ ["&>ul"]: { gap: "0.93px" } }}
+                rootStyles={{ ['&>ul']: { gap: '0.93px' } }}
                 className="flex flex-col w-full mb-[269px] pb-[22px] sm:pb-5"
               >
                 <MenuItem
@@ -327,7 +328,7 @@ export default function WireframeOnePage() {
                       as="p"
                       className="!text-teal-300 text-center"
                     >
-                      24%{" "}
+                      24%{' '}
                     </Text>
                   </div>
                 </div>
@@ -373,7 +374,7 @@ export default function WireframeOnePage() {
                         onChange={(e) => setSearchBarValue1(e)}
                         suffix={
                           searchBarValue1?.length > 0 ? (
-                            <CloseSVG onClick={() => setSearchBarValue1("")} />
+                            <CloseSVG onClick={() => setSearchBarValue1('')} />
                           ) : null
                         }
                         className="sm:px-5 !text-gray-600 border-black-900_26 border border-solid flex-grow"
@@ -408,9 +409,9 @@ export default function WireframeOnePage() {
                   </div>
                   <ReactTable
                     size="sm"
-                    bodyProps={{ className: "" }}
-                    headerProps={{ className: "md:flex-col" }}
-                    rowDataProps={{ className: "md:flex-col" }}
+                    bodyProps={{ className: '' }}
+                    headerProps={{ className: 'md:flex-col' }}
+                    rowDataProps={{ className: 'md:flex-col' }}
                     columns={tableColumns}
                     data={tableVm}
                   />
