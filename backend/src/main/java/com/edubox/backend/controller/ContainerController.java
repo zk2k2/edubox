@@ -23,17 +23,20 @@ public class ContainerController {
     public List<Container> getAllContainers() {
         return service.getAllContainers();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Container> getContainerById(@PathVariable UUID id) {
         Container container = service.getContainerById(id);
         return ResponseEntity.ok(container);
     }
-    //get containers by user
+
+    // get containers by user
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Container>> getContainersByUserId(@PathVariable UUID id) {
         List<Container> containers = service.getContainerByUserId(id);
         return ResponseEntity.ok(containers);
     }
+
     @GetMapping("/myContainers")
     public ResponseEntity<List<Container>> getMyContainers(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -42,11 +45,11 @@ public class ContainerController {
         List<Container> containers = service.getMyContainers(token);
         return ResponseEntity.ok(containers);
     }
-    //get your own containers
+    // get your own containers
 
     @PostMapping
     public ResponseEntity<Container> createContainer(@RequestBody CreateContainerDTO container,
-                                                     HttpServletRequest request) {
+            HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String token;
         token = authHeader.substring(7);
@@ -54,12 +57,14 @@ public class ContainerController {
         return ResponseEntity.ok(createdContainer);
     }
 
-    /*@PutMapping("")
-    public ResponseEntity<Container> updateContainer(@RequestBody Container container) {
-        Container updatedContainer = service.save( container);
-        return ResponseEntity.ok(updatedContainer);
-    }*/
-
+    /*
+     * @PutMapping("")
+     * public ResponseEntity<Container> updateContainer(@RequestBody Container
+     * container) {
+     * Container updatedContainer = service.save( container);
+     * return ResponseEntity.ok(updatedContainer);
+     * }
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteContainer(@PathVariable UUID id) {

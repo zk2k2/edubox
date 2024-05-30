@@ -1,45 +1,83 @@
 import React from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Button, Input, Text, Img, Heading } from '../../components';
 import Header from '../../components/Header';
 import { MenuItem, Menu, Sidebar } from 'react-pro-sidebar';
+import { AppSidebar } from 'components/AppSidebar';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthContext';
+
+const BACKEND_URL = 'http://localhost:18181';
 
 export default function Dashboard() {
   const [collapsed, setCollapsed] = React.useState(false);
+  const [firstname, setFirstname] = useState('');
+  const [role, setRole] = useState('');
+  const { userName, setUserName } = useContext(AuthContext);
 
-  const QuickActionItem = ({ icon, title, description }) => (
-    <div className="flex gap-3.5 !w-full py-5 pr-14 pl-6 text-black bg-white max-md:flex-wrap max-md:px-5 my-3 bg-white-A700 hover:bg-blue-A700 transition-colors duration-300 hover:text-white-A700">
-      <img
-        src={icon}
-        alt=""
-        className="shrink-0 aspect-square w-[50px] h-[50px]"
-      />
-      <div className="flex flex-col grow shrink-0 self-start  basis-0 w-fit ">
-        <div className="text-2xl font-semibold">{title}</div>
-        <div className=" text-md">{description}</div>
+  function getUserInfo() {
+    const accessToken = Cookies.get('accessToken');
+    const userInfo = jwtDecode(accessToken);
+    const userId = userInfo.userId;
+
+    fetch(BACKEND_URL + '/api/v1/users/' + userId, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setUserName(data.firstname);
+        setRole(data.role);
+      });
+  }
+  getUserInfo();
+  const QuickActionItem = ({ icon, title, description, link }) => (
+    <Link to={link} className="no-underline">
+      <div className="flex gap-3.5 !w-full py-5 pr-14 pl-6 text-black bg-white max-md:flex-wrap max-md:px-5 my-3 bg-white-A700 hover:bg-blue-A700 transition-colors duration-300 hover:text-white-A700">
+        <img
+          src={icon}
+          alt=""
+          className="shrink-0 aspect-square w-[50px] h-[50px]"
+        />
+        <div className="flex flex-col grow shrink-0 self-start  basis-0 w-fit ">
+          <div className="text-2xl font-semibold">{title}</div>
+          <div className=" text-md">{description}</div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
   const quickActionItems = [
     {
       icon: '/images/dashboard_sandbox.png',
       title: 'Deploy a new Virtual Machine',
       description: 'Instantly get a code running environment up',
+      link: '/deploy-vm',
     },
     {
       icon: '/images/dashboard_profile.png',
       title: 'Manage my profile',
       description: 'View and edit your profile details',
+      link: '/user',
     },
     {
       icon: '/images/dashboard_info.png',
       title: 'See the guide',
       description: 'Stuck? View how our platform works',
+      link: '/guide',
     },
     {
       icon: '/images/dashboard_preferences.png',
       title: 'Manage my preferences',
       description: 'Stuck? View how our platform works',
+      link: '/preferences',
     },
   ];
 
@@ -52,88 +90,12 @@ export default function Dashboard() {
           content="Web site created using create-react-app"
         />
       </Helmet>
-      <div className="w-full bg-gray-50">
+      <div className="w-full bg-gray-50 !overflow-hidden h-screen">
         <div className="flex flex-col">
-          <Header className="p-[15px] bg-blue-A700" />
-          <div className="flex md:flex-col justify-center items-start w-[98%] md:w-full gap-6 md:p-5">
-            <Sidebar
-              width="282px !important"
-              collapsedWidth="80px !important"
-              collapsed={collapsed}
-              className="flex flex-col h-screen top-0 py-[50px] md:py-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
-            >
-              <Menu
-                menuItemStyles={{
-                  button: {
-                    padding: '12px',
-                    gap: '22px',
-                    alignSelf: 'start',
-                    color: '#505968',
-                    fontWeight: 400,
-                    fontSize: '20px',
-                  },
-                }}
-                rootStyles={{ ['&>ul']: { gap: '0.93px' } }}
-                className="flex flex-col w-full mb-[269px] pb-[22px] sm:pb-5"
-              >
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_sandbox.png"
-                      alt="sandbox_one"
-                      className="h-[41px] w-[41px] object-cover"
-                    />
-                  }
-                >
-                  Virtual Machines
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_group.png"
-                      alt="image"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  User Management
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_user_1.png"
-                      alt="user_one"
-                      className="h-[28px] w-[28px] object-cover"
-                    />
-                  }
-                >
-                  My Account
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_info.png"
-                      alt="info_one"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  Assistance
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_gear.png"
-                      alt="gear_one"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  Settings
-                </MenuItem>
-              </Menu>
-            </Sidebar>
-            <div className="md:self-stretch flex-1">
+          <Header className="p-[15px] bg-blue-A700" firstname={userName} />
+          <div className="flex md:flex-col justify-center !overflow-hidden items-start w-[98%] md:w-full gap-6 md:p-5">
+            <AppSidebar role={role} />
+            <div className="md:self-stretch flex-1 !overflow-hidden">
               <div className="flex flex-col gap-2">
                 <div className="flex p-2 bg-white-A700 mt-8">
                   <div className="flex flex-col w-[56%] md:w-full mt-1.5 ml-[13px] gap-[15px] md:ml-0">
@@ -145,7 +107,7 @@ export default function Dashboard() {
                       />
                       <div className="flex flex-col items-start gap-[3px]">
                         <Heading size="md" as="h1">
-                          Welcome back, Zied!
+                          Welcome back {userName}!
                         </Heading>
                         <Text as="p" className="!font-normal">
                           Quickly get started with EduBox below
@@ -164,6 +126,7 @@ export default function Dashboard() {
                             icon={item.icon}
                             title={item.title}
                             description={item.description}
+                            link={item.link}
                           />
                         ))}
                       </div>
@@ -172,9 +135,9 @@ export default function Dashboard() {
                       <div className="flex flex-col grow justify-center w-full bg-white max-md:mt-5 max-md:max-w-full">
                         <div className="flex items-stretch">
                           <img
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/1e8ee57938ecc76b46d64eafca91caa4dd254690fac498f848ee160761ea9a33?apiKey=885d1370e8b24e0bae7345330583fdb3&"
+                            src="/images/dashboard_art.png"
                             alt="decoration"
-                            className="w-full aspect-[1.12] max-md:max-w-full"
+                            className="w-full  max-md:max-w-full"
                           />
                         </div>
                       </div>

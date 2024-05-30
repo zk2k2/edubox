@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function Logo() {
   return (
@@ -16,14 +18,15 @@ function SignUpForm() {
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // State pour le champ de confirmation du mot de passe
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState(''); // State pour l'erreur du champ de confirmation du mot de passe
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowconfirmPassword] = useState(false);
+
   const [role, setRole] = useState('USER');
 
   const handleSubmit = (event) => {
@@ -49,7 +52,6 @@ function SignUpForm() {
       }
     };
 
-    // Fonction de validation pour le champ email
     const validateEmail = (email) => {
       const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!re.test(email)) {
@@ -90,7 +92,7 @@ function SignUpForm() {
     const isPasswordValid = validatePassword(password);
     const isConfirmPasswordValid = validateConfirmPassword();
 
-    const BACKEND_URL = 'http://localhost:8080';
+    const BACKEND_URL = 'http://localhost:18181';
 
     if (
       isFirstNameValid &&
@@ -121,7 +123,7 @@ function SignUpForm() {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          window.location.href = '/dashboard';
+          window.location.href = '/login';
         })
         .catch((error) => {
           console.log(error);
@@ -130,121 +132,125 @@ function SignUpForm() {
   };
 
   return (
-    <form
-      className="flex flex-col grow px-7 pt-8 pb-8 w-full text-xl bg-white-A700 max-md:px-5 max-md:mt-10 max-md:max-w-full"
-      onSubmit={handleSubmit}
-    >
-      <Logo />
-      <h1 className="text-center mt-11 text-5xl font-semibold text-sky-900 max-md:mt-10 max-md:text-4xl">
-        Sign Up
-      </h1>
-      <div className="flex gap-5 justify-between px-4 py-4 mt-14 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-10">
-        <label htmlFor="firstname" className="sr-only">
-          First Name
-        </label>
-        <input
-          type="text"
-          id="firstname"
-          placeholder="First name"
-          aria-label="Firstname"
-          value={firstname}
-          onChange={(event) => setFirstName(event.target.value)}
-          className="w-full bg-transparent focus:outline-none"
-        />
-        {firstNameError && <div className="text-red-500">{firstNameError}</div>}
-      </div>
+    <div>
+      <form
+        className="flex flex-col grow px-7 pt-8 pb-8 w-full text-xl bg-white-A700 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+        onSubmit={handleSubmit}
+      >
+        <Logo />
+        <h1 className="text-center mt-11 text-5xl font-semibold text-sky-900 max-md:mt-10 max-md:text-4xl">
+          Sign Up
+        </h1>
+        <div className="flex gap-5 justify-between px-4 py-4 mt-14 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-10">
+          <label htmlFor="firstname" className="sr-only">
+            First Name
+          </label>
+          <input
+            type="text"
+            id="firstname"
+            placeholder="First name"
+            aria-label="Firstname"
+            value={firstname}
+            onChange={(event) => setFirstName(event.target.value)}
+            className="w-full bg-transparent focus:outline-none"
+          />
+          {firstNameError && (
+            <div className="text-red-500">{firstNameError}</div>
+          )}
+        </div>
 
-      <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-7">
-        <label htmlFor="lastname" className="sr-only">
-          Last Name
-        </label>
-        <input
-          type="text"
-          id="lastname"
-          placeholder="Last Name"
-          aria-label="Lastname"
-          value={lastname}
-          onChange={(event) => setLastName(event.target.value)}
-          className="w-full bg-transparent focus:outline-none"
-        />
-        {lastNameError && <div className="text-red-500">{lastNameError}</div>}
-      </div>
-      <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5">
-        <label htmlFor="email" className="sr-only">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Email"
-          aria-label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          className="w-full bg-transparent focus:outline-none"
-        />
-        {emailError && <div className="text-red-500">{emailError}</div>}
-      </div>
-      <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
-        <label htmlFor="password" className="sr-only">
-          Password
-        </label>
-        <input
-          type={showPassword ? 'text' : 'password'}
-          id="password"
-          placeholder="Password"
-          aria-label="Password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="w-full bg-transparent focus:outline-none"
-        />
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/5001dfd2dcb6fc4e89cef442604c817e0f7bbe76e7705a36b7c9e71e1db4f9c5?apiKey=4231b80fdf894e88b435b645bef85a1d&"
-          alt="Toggle password visibility"
-          className="shrink-0 self-start aspect-square w-[26px]"
-          onClick={() => setShowPassword(!showPassword)}
-          style={{ cursor: 'pointer' }}
-        />
-      </div>
-      {passwordError && <div className="text-red-500">{passwordError}</div>}
+        <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-7">
+          <label htmlFor="lastname" className="sr-only">
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="lastname"
+            placeholder="Last Name"
+            aria-label="Lastname"
+            value={lastname}
+            onChange={(event) => setLastName(event.target.value)}
+            className="w-full bg-transparent focus:outline-none"
+          />
+          {lastNameError && <div className="text-red-500">{lastNameError}</div>}
+        </div>
+        <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5">
+          <label htmlFor="email" className="sr-only">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            aria-label="Email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className="w-full bg-transparent focus:outline-none"
+          />
+          {emailError && <div className="text-red-500">{emailError}</div>}
+        </div>
+        <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
+          <label htmlFor="password" className="sr-only">
+            Password
+          </label>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            id="password"
+            placeholder="Password"
+            aria-label="Password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            className="w-full bg-transparent focus:outline-none"
+          />
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5001dfd2dcb6fc4e89cef442604c817e0f7bbe76e7705a36b7c9e71e1db4f9c5?apiKey=4231b80fdf894e88b435b645bef85a1d&"
+            alt="Toggle password visibility"
+            className="shrink-0 self-start aspect-square w-[26px]"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+        {passwordError && <div className="text-red-500">{passwordError}</div>}
 
-      <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
-        <label htmlFor="confirmPassword" className="sr-only">
-          Confirm Password
-        </label>
-        <input
-          type={showconfirmPassword ? 'text' : 'password'}
-          id="confirmPassword"
-          placeholder="Confirm Password"
-          aria-label="Confirm Password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          className="w-full bg-transparent focus:outline-none"
-        />
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/5001dfd2dcb6fc4e89cef442604c817e0f7bbe76e7705a36b7c9e71e1db4f9c5?apiKey=4231b80fdf894e88b435b645bef85a1d&"
-          alt="Toggle password visibility"
-          className="shrink-0 self-start aspect-square w-[26px]"
-          onClick={() => setShowconfirmPassword(!showconfirmPassword)}
-          style={{ cursor: 'pointer' }}
-        />
-      </div>
-      {confirmPasswordError && (
-        <div className="text-red-500">{confirmPasswordError}</div>
-      )}
+        <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
+          <label htmlFor="confirmPassword" className="sr-only">
+            Confirm Password
+          </label>
+          <input
+            type={showconfirmPassword ? 'text' : 'password'}
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            aria-label="Confirm Password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            className="w-full bg-transparent focus:outline-none"
+          />
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5001dfd2dcb6fc4e89cef442604c817e0f7bbe76e7705a36b7c9e71e1db4f9c5?apiKey=4231b80fdf894e88b435b645bef85a1d&"
+            alt="Toggle password visibility"
+            className="shrink-0 self-start aspect-square w-[26px]"
+            onClick={() => setShowconfirmPassword(!showconfirmPassword)}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+        {confirmPasswordError && (
+          <div className="text-red-500">{confirmPasswordError}</div>
+        )}
 
-      <button type="submit" className="sign-up-button my-5">
-        Sign up
-      </button>
+        <button type="submit" className="sign-up-button my-5">
+          Sign up
+        </button>
 
-      <div className="self-center mt-5 text-base text-black flex items-center">
-        <span className="text-black">Already have an account?</span>
-        <a href="/Login" className="ml-1 text-blue-600">
-          Login
-        </a>
-      </div>
-    </form>
+        <div className="self-center mt-5 text-base text-black flex items-center">
+          <span className="text-black">Already have an account?</span>
+          <a href="/Login" className="ml-1 text-blue-600">
+            Login
+          </a>
+        </div>
+      </form>
+    </div>
   );
 }
 

@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { AuthContext } from 'AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppAlert } from 'components/AppAlert';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 function Logo() {
   return (
@@ -11,12 +17,26 @@ function Logo() {
   );
 }
 
+/* function storeUserInfoInCookies(userInfo) {
+  const secureOptions = {
+    expires: 7,
+    sameSite: 'Strict',
+    httpOnly: true,
+  };
+  Cookies.set('userId', userInfo.userId, secureOptions);
+  Cookies.set('email', userInfo.sub, secureOptions);
+  Cookies.set('issuedAt', userInfo.iat, secureOptions);
+  Cookies.set('expiration', userInfo.exp, secureOptions);
+} */
+
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const { setIsAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -48,7 +68,7 @@ function LoginForm() {
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
-    const BACKEND_URL = 'http://localhost:8080';
+    const BACKEND_URL = 'http://localhost:18181';
 
     if (isEmailValid && isPasswordValid) {
       const authenticationRequest = {
@@ -64,8 +84,13 @@ function LoginForm() {
       })
         .then((response) => response.json())
         .then((data) => {
+          Cookies.set('accessToken', data.access_token, {
+            expires: 7,
+            sameSite: 'Strict',
+          });
           console.log(data);
-          window.location.href = '/dashboard';
+          setIsAuthenticated(true);
+          navigate('/dashboard');
         })
         .catch((error) => {
           console.log(error);

@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Button, Input, Text, Img, Heading } from '../../components';
 import Header from '../../components/Header';
-import { MenuItem, Menu, Sidebar } from 'react-pro-sidebar';
-import { Select } from '../../components'; // Import the custom Select component
+import { MenuItem, Menu } from 'react-pro-sidebar';
+import { AppSidebar } from 'components/AppSidebar';
+import { AuthContext } from '../../AuthContext';
+import { useContext } from 'react';
+import { Select } from '../../components';
 
 export default function DeployVM() {
-  const [collapsed, setCollapsed] = useState(false);
+  const { userName } = useContext(AuthContext);
 
   return (
     <>
@@ -19,85 +22,9 @@ export default function DeployVM() {
       </Helmet>
       <div className="w-full !h-screen bg-gray-50 !overflow-hidden">
         <div className="flex flex-col">
-          <Header className="p-[15px] bg-blue-A700" />
+          <Header className="p-[15px] bg-blue-A700" firstname={userName} />
           <div className="flex md:flex-col justify-between items-start w-[98%] md:w-full gap-5 md:p-5">
-            <Sidebar
-              width="282px !important"
-              collapsedWidth="80px !important"
-              collapsed={collapsed}
-              className="flex flex-col h-screen top-0 py-[50px] md:py-5 bg-blue_gray-50 !sticky md:hidden !overflow-hidden"
-            >
-              <Menu
-                menuItemStyles={{
-                  button: {
-                    padding: '12px',
-                    gap: '22px',
-                    alignSelf: 'start',
-                    color: '#505968',
-                    fontWeight: 400,
-                    fontSize: '20px',
-                  },
-                }}
-                rootStyles={{ ['&>ul']: { gap: '0.93px' } }}
-                className="flex flex-col w-full mb-[269px] pb-[22px] sm:pb-5"
-              >
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_sandbox.png"
-                      alt="sandbox_one"
-                      className="h-[41px] w-[41px] object-cover"
-                    />
-                  }
-                >
-                  Virtual Machines
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_group.png"
-                      alt="image"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  User Management
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_user_1.png"
-                      alt="user_one"
-                      className="h-[28px] w-[28px] object-cover"
-                    />
-                  }
-                >
-                  My Account
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_info.png"
-                      alt="info_one"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  Assistance
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_gear.png"
-                      alt="gear_one"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  Settings
-                </MenuItem>
-              </Menu>
-            </Sidebar>
+            <AppSidebar role="USER" />
             <div className="flex flex-col md:self-stretch gap-[18px] flex-1">
               <div className="flex p-[13px] bg-white-A700 mx-5 mt-5">
                 <div className="flex flex-col w-[56%] md:w-full mt-1.5 ml-[13px] gap-[15px] md:ml-0">
@@ -166,9 +93,8 @@ export default function DeployVM() {
                           shape="round"
                           name="baseImage"
                           options={[
-                            { value: 'image1', label: 'Image 1' },
-                            { value: 'image2', label: 'Image 2' },
-                            { value: 'image3', label: 'Image 3' },
+                            { value: 'alpine', label: 'Alpine' },
+                            { value: 'debian', label: 'Debian' },
                           ]}
                           placeholder="Select base image"
                           className="self-stretch border-black-900_26 !pr-0 pl-3 border border-solid"
@@ -190,16 +116,12 @@ export default function DeployVM() {
                         />
                       </div>
                       <div className="flex flex-col items-start gap-1.5">
-                        <Text as="p">Java Installation</Text>
+                        <Text as="p">Python Installation (optional)</Text>
                         <Select
                           shape="round"
                           name="java"
-                          options={[
-                            { value: 'python3', label: 'Python 3' },
-                            { value: 'python2', label: 'Python 2' },
-                            { value: 'python1', label: 'Python 1' },
-                          ]}
-                          placeholder="Select Python installation (optional)"
+                          options={[{ value: 'python3', label: 'Python 3' }]}
+                          placeholder="Select Python installation"
                           className="self-stretch border-black-900_26 !pr-0 pl-3 border border-solid"
                         />
                       </div>
@@ -238,6 +160,9 @@ export default function DeployVM() {
                         color="blue_A700"
                         size="sm"
                         className="w-full !mt-[92px] sm:px-5 font-medium border-black-900_26 border border-solid rounded-[5px]"
+                        onclick={() => {
+                          console.log('Deploying VM...');
+                        }}
                       >
                         Deploy Virtual Machine
                       </Button>
