@@ -58,19 +58,15 @@ RUN cd /opt/Python-${PYTHON_VERSION} \
         if not os.path.exists(self.dockerfile_path):
             self.create_copy(OS_name,new_name)
             dockerfile_content=open(self.dockerfile_path,"r").read().split("\n")
-            last_command=dockerfile_content[1:]
-            dockerfile_content=dockerfile_content[:1]
             for i in special_command:
                 dockerfile_content.append(self.command[OS_name][i])
-
-            dockerfile_content.extend(last_command)
             docker_file_full_content="\n".join(dockerfile_content)
             open(self.dockerfile_path,"w").write(docker_file_full_content)
     def build_specifi_os(self):
-
-        P=subprocess.Popen(f"docker build -t {'ogaboga'} {self.base_path+self.name+'/'}",shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
+        print(self.base_path+self.name)
+        P=subprocess.Popen(f"docker build -t {self.name*2} {self.base_path+self.name+'/'}",shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out,stderr=P.communicate()
+
         print("building done")
         return self.name
     def prep_and_build(self,base_os,commands):

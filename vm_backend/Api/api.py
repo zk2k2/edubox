@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from scripts.create_container import create_instance
+from scripts.create_container import Run_containers
 from scripts.stop_container import stop_container
 from scripts.secrets import getsecrets
 from os import getcwd
@@ -8,8 +8,9 @@ from BaseImages.create_specialized_images import Create_Special_VM as Vmcreator
 from BaseImages.clone_base_images import clone_bases
 app = Flask(__name__)
 VM_builder=Vmcreator(path_base+"/BaseImages/")
-clone_bases(getcwd())
+#clone_bases(path_base)
 Built_images=[]
+VM_starter=Run_containers()
 
 @app.route('/createVm', methods=['POST'])
 def get_incomes():
@@ -22,7 +23,8 @@ def get_incomes():
     if vmname not in Built_images:
         VM_builder.prep_and_build(baseImage_name,languages)
     Built_images.append(vmname)
-    vmcontent=create_instance(vmname)
+    vmcontent=VM_starter.Run_container(vmname,baseImage_name)
+    print(vmcontent)
     return jsonify(vmcontent)
 
 
