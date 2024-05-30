@@ -2,6 +2,7 @@ package com.edubox.backend.entity;
 
 import com.edubox.backend.enums.Role;
 import com.edubox.backend.entity.Token;
+import com.edubox.backend.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +37,10 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
     private String password;
+    private Date dateofbirth;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Enumerated(EnumType.STRING)
     private Role role;
