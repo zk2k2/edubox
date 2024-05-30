@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { AuthContext } from 'AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 
 function Logo() {
@@ -12,12 +16,26 @@ function Logo() {
   );
 }
 
+/* function storeUserInfoInCookies(userInfo) {
+  const secureOptions = {
+    expires: 7,
+    sameSite: 'Strict',
+    httpOnly: true,
+  };
+  Cookies.set('userId', userInfo.userId, secureOptions);
+  Cookies.set('email', userInfo.sub, secureOptions);
+  Cookies.set('issuedAt', userInfo.iat, secureOptions);
+  Cookies.set('expiration', userInfo.exp, secureOptions);
+} */
+
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const { setIsAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,10 +43,10 @@ function LoginForm() {
     const validateEmail = (email) => {
       const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!re.test(email)) {
-        setEmailError("Invalid email address");
+        setEmailError('Invalid email address');
         return false;
       } else {
-        setEmailError("");
+        setEmailError('');
         return true;
       }
     };
@@ -37,11 +55,11 @@ function LoginForm() {
       const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       if (!re.test(password)) {
         setPasswordError(
-          "Password must be at least 8 characters long and contain at least one letter and one number"
+          'Password must be at least 8 characters long and contain at least one letter and one number'
         );
         return false;
       } else {
-        setPasswordError("");
+        setPasswordError('');
         return true;
       }
     };
@@ -49,27 +67,29 @@ function LoginForm() {
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
-    const BACKEND_URL = "http://localhost:8080";
+    const BACKEND_URL = 'http://localhost:8080';
 
     if (isEmailValid && isPasswordValid) {
       const authenticationRequest = {
         email,
         password,
       };
-      fetch(BACKEND_URL + "/api/v1/auth/authenticate", {
-        method: "POST",
+      fetch(BACKEND_URL + '/api/v1/auth/authenticate', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(authenticationRequest),
       })
         .then((response) => response.json())
         .then((data) => {
+          Cookies.set('accessToken', data.access_token, {
+            expires: 7,
+            sameSite: 'Strict',
+          });
           console.log(data);
-          alert(JSON.stringify(data["access_token"]));
-          const token = JSON.stringify(data["access_token"]);
-          Cookies.set('token', token, { expires: 7 }); // Expires in 7 days
-          window.location.href = "/";
+          setIsAuthenticated(true);
+          navigate('/dashboard');
         })
         .catch((error) => {
           console.log(error);
@@ -90,8 +110,8 @@ function LoginForm() {
 
         <div className="flex gap-5 justify-between px-4 py-4 mt-14 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50 max-md:pr-5 max-md:mt-10">
           <label htmlFor="email" className="sr-only">
-            {" "}
-            Email{" "}
+            {' '}
+            Email{' '}
           </label>
           <input
             type="email"
@@ -109,7 +129,7 @@ function LoginForm() {
             Password
           </label>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             placeholder="Password"
             aria-label="Password"
@@ -123,7 +143,7 @@ function LoginForm() {
             alt="Toggle password visibility"
             className="shrink-0 self-start aspect-square w-[26px]"
             onClick={() => setShowPassword(!showPassword)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           />
         </div>
         {passwordError && <div className="text-red-500">{passwordError}</div>}
