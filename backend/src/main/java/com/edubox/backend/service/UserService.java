@@ -2,11 +2,13 @@ package com.edubox.backend.service;
 
 import com.edubox.backend.auth.ChangePasswordRequest;
 import com.edubox.backend.entity.User;
+import com.edubox.backend.repository.TokenRepository;
 import com.edubox.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -19,6 +21,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
+    private final TokenRepository tokenRepository;
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
 
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
@@ -61,8 +64,20 @@ public class UserService {
         return repository.save(user);
     }
 
-
+    @Transactional
     public void deleteUser(UUID userId) {
-        repository.deleteById(userId);
+        // First, delete all tokens associated with the user
+        tokenRepository.deleteByUserId(userId);
+
+        // Then, delete the user
+        repository.deleteByUserId(userId);
+    }
+
+    public User getCurrentUser(Principal connectedUser) {
+        if (connectedUser == null) {
+            throw new IllegalArgumentException("Connected user principal cannot be null");
+        }
+        // Assuming connectedUser is an instance of UsernamePasswordAuthenticationToken
+        return (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal(); // Assuming User object has a method getId() which returns UUID
     }
 }
