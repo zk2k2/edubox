@@ -18,7 +18,7 @@ VM_starter = Run_containers()
 
 
 @app.route("/createVm", methods=["POST"])
-def get_incomes():
+def container_starter():
     request_json = request.get_json()
     print(request_json)
     if request_json["secret"] != getsecrets():
@@ -29,7 +29,6 @@ def get_incomes():
         VM_builder.prep_and_build(baseImage_name, languages)
     Built_images.append(vmname)
     vmcontent = VM_starter.Run_container(vmname, baseImage_name)
-    print(vmcontent)
     return jsonify(vmcontent)
 
 

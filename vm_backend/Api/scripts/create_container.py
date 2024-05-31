@@ -6,7 +6,7 @@ class Run_containers():
     def    __init__(self):
         self.paswword=self.update_password()
         self.port_id=read_ports_id()
-        self.start_vm={"ubuntu":"docker run -itd -p {}:6080 -e PASSWORD={} {}","alpine":"docker run  -itd  -p {}:6080 -e AUTOCONNECT=true -e VNC_PASSWORD={} -e VNC_SERVER=172.17.0.1:5900 -e VIEW_ONLY=false {}"}
+        self.start_vm={"ubuntu":"docker run -itd -p {}:6080 -e PASSWORD={} {}","alpine":"docker run -itd -p {}:6080  {}"}
         self.used_ports=self.update_port_id()
         print(self.used_ports)
     def update_port_id(self):
@@ -20,7 +20,12 @@ class Run_containers():
         password=get_random_password()
 
         port=get_random_port(self.used_ports)
-        command=command.format(port,password,container_name*2)
+        if base_image =="alpine":
+             
+            command=command.format(port,container_name*2)
+            password="alpine"
+        else:
+            command=command.format(port,password,container_name*2)
         try:
             P = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             container_id, stderr = P.communicate()

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -19,6 +21,8 @@ function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [birthDate, setBirthDate] = useState(null);
+  const [status, setStatus] = useState('student'); // Default value is 'student'
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -26,13 +30,11 @@ function SignUpForm() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowconfirmPassword] = useState(false);
-
   const [role, setRole] = useState('USER');
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const validateFirstName = (firstname) => {
+      const validateFirstName = (firstname) => {
       if (firstname.trim() === '') {
         setFirstNameError('First name is required');
         return false;
@@ -92,7 +94,7 @@ function SignUpForm() {
     const isPasswordValid = validatePassword(password);
     const isConfirmPasswordValid = validateConfirmPassword();
 
-    const BACKEND_URL = 'http://localhost:18181';
+    const BACKEND_URL = 'http://localhost:8080';
 
     if (
       isFirstNameValid &&
@@ -129,7 +131,7 @@ function SignUpForm() {
           console.log(error);
         });
     }
-  };
+   };
 
   return (
     <div>
@@ -189,6 +191,22 @@ function SignUpForm() {
           />
           {emailError && <div className="text-red-500">{emailError}</div>}
         </div>
+
+       
+
+        <div className="flex gap-5justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
+          <label htmlFor="birthDate" className="sr-only">
+            Date of Birth
+          </label>
+          <DatePicker
+            selected={birthDate}
+            onChange={(date) => setBirthDate(date)}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Select your date of birth"
+            className="w-full bg-transparent focus:outline-none"
+          />
+        </div>
+
         <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
           <label htmlFor="password" className="sr-only">
             Password
@@ -212,8 +230,7 @@ function SignUpForm() {
           />
         </div>
         {passwordError && <div className="text-red-500">{passwordError}</div>}
-
-        <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
+   <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
           <label htmlFor="confirmPassword" className="sr-only">
             Confirm Password
           </label>
@@ -238,6 +255,40 @@ function SignUpForm() {
         {confirmPasswordError && (
           <div className="text-red-500">{confirmPasswordError}</div>
         )}
+ <div className="flex gap-5 justify-between px-4 py-4 mt-7 whitespace-nowrap bg-white rounded-md border border-solid border-black border-opacity-10 text-black text-opacity-50">
+  <div>
+    <label className="mr-4">
+      <input
+        type="radio"
+        name="status"
+        value="student"
+        checked={status === 'student'}
+        onChange={() => setStatus('student')}
+      />
+      Student
+    </label>
+    <label className="mr-4">
+      <input
+        type="radio"
+        name="status"
+        value="professional"
+        checked={status === 'professional'}
+        onChange={() => setStatus('professional')}
+      />
+      Professional
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="status"
+        value="other"
+        checked={status === 'other'}
+        onChange={() => setStatus('other')}
+      />
+      Other
+    </label>
+  </div>
+</div>
 
         <button type="submit" className="sign-up-button my-5">
           Sign up
