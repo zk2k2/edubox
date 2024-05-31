@@ -16,6 +16,8 @@ import SignUp from 'pages/SignUp';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import DeployVM from 'pages/DeployVM';
+import Temp from 'pages/Temp';
+import Guide from 'pages/Guide';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -50,7 +52,7 @@ const ProjectRoutes = () => {
         <Route path="wireframefour" element={<WireframeFour />} />
         <Route path="signup" element={<SignUp />} />
         <Route
-          path="dashboard"
+          path="home"
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -62,6 +64,22 @@ const ProjectRoutes = () => {
           element={
             <ProtectedRoute>
               <DeployVM />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="temp"
+          element={
+            <ProtectedRoute>
+              <Temp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="guide"
+          element={
+            <ProtectedRoute>
+              <Guide />
             </ProtectedRoute>
           }
         />

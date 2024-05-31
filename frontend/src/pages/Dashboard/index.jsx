@@ -77,7 +77,7 @@ export default function Dashboard() {
       icon: '/images/dashboard_preferences.png',
       title: 'Manage my preferences',
       description: 'Stuck? View how our platform works',
-      link: '/preferences',
+      link: '/admin-view',
     },
   ];
 

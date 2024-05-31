@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar';
 import { Img } from 'components/Img';
+import { Link } from 'react-router-dom';
 
 const AppSidebar = ({ collapsed, role, ...props }) => {
   return (
@@ -28,11 +29,24 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
         <MenuItem
           icon={
             <Img
+              src="images/home_icon.png"
+              alt="sandbox_one"
+              className="h-[39px] w-[39px] object-cover"
+            />
+          }
+          component={<Link to="/home" />}
+        >
+          Home
+        </MenuItem>
+        <MenuItem
+          icon={
+            <Img
               src="images/img_sandbox.png"
               alt="sandbox_one"
               className="h-[41px] w-[41px] object-cover"
             />
           }
+          component={<Link to="/virtual-machines" />}
         >
           Virtual Machines
         </MenuItem>
@@ -45,6 +59,7 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
                 className="h-[32px] w-[32px] object-cover"
               />
             }
+            component={<Link to="/user-management" />}
           >
             User Management
           </MenuItem>
@@ -57,6 +72,7 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
               className="h-[28px] w-[28px] object-cover"
             />
           }
+          component={<Link to="/user" />}
         >
           My Account
         </MenuItem>
@@ -68,8 +84,9 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
               className="h-[32px] w-[32px] object-cover"
             />
           }
+          component={<Link to="/guide" />}
         >
-          Assistance
+          Guide
         </MenuItem>
         <MenuItem
           icon={
@@ -79,6 +96,7 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
               className="h-[32px] w-[32px] object-cover"
             />
           }
+          component={<Link to="/settings" />}
         >
           Settings
         </MenuItem>

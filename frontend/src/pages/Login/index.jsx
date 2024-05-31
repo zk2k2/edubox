@@ -89,7 +89,7 @@ function LoginForm() {
           });
           console.log(data);
           setIsAuthenticated(true);
-          navigate('/dashboard');
+          navigate('/home');
         })
         .catch((error) => {
           console.log(error);

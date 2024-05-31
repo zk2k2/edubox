@@ -41,7 +41,7 @@ const Select = React.forwardRef(
     const handleChange = (e) => {
       const selectedOption = e.target.value;
       setSelectedValue(selectedOption);
-      if (onChange) onChange(selectedOption);
+      if (onChange) onChange(e); // Pass the event object instead of just the selected value
     };
 
     return (
@@ -62,7 +62,6 @@ const Select = React.forwardRef(
             onChange={handleChange}
             {...restProps}
             className="w-full"
-            required
           >
             {placeholder && <option value="">{placeholder}</option>}
             {options.map((option) => (
