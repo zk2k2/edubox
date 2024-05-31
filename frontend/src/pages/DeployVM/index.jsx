@@ -145,8 +145,7 @@ export default function DeployVM() {
                         below to access it.
                       </Text>
                       <Text as="h3" className="!font-normal !text-xl mb-3">
-                        Your VM password is 66687104b6c27da56e1fbacd5636a9e6,
-                        please keep it safe.
+                        Your VM password is {vmPassword}, please keep it safe.
                       </Text>
                       <button
                         onClick={accessVM}
