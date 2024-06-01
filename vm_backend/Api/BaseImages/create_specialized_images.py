@@ -8,6 +8,7 @@ class Create_Special_VM():
         self.name=""
         self.command={"ubuntu":{"python2.7":"RUN apt install python2.7 python-pip","python3":"RUN apt install python3"},
                       "alpine":{"python3":"""
+USER root                                
 ARG PYTHON_VERSION=3.9.9
 RUN apk add \
     wget \
@@ -27,7 +28,8 @@ RUN cd /opt \
 RUN cd /opt/Python-${PYTHON_VERSION} \ 
     && ./configure --prefix=/usr --enable-optimizations --with-ensurepip=install \
     && make install \
-    && rm /opt/Python-${PYTHON_VERSION}.tgz /opt/Python-${PYTHON_VERSION} -rf                                
+    && rm /opt/Python-${PYTHON_VERSION}.tgz /opt/Python-${PYTHON_VERSION} -rf   
+USER alpine                             
 """}}
     def create_copy(self,path,newname):
         if not os.path.exists(self.base_path+path):
