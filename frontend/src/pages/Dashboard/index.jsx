@@ -12,7 +12,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../AuthContext';
 
 
-
+const BACKEND_URL = process.env.REACT_APP_URL_BACKEND;
 export default function Dashboard() {
   const [collapsed, setCollapsed] = React.useState(false);
   const [firstname, setFirstname] = useState('');
