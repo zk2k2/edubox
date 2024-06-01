@@ -20,7 +20,7 @@ class Run_containers():
         password=get_random_password()
 
         port=get_random_port(self.used_ports)
-        if base_image =="alpine":
+        if "alpine" in base_image :
              
             command=command.format(port,container_name*2)
             password="alpine"
