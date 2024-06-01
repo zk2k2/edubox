@@ -17,6 +17,10 @@ export default function DeployVM() {
   const [success, setSuccess] = useState(false);
   const [port, setPort] = useState('');
   const [vmPassword, setVmPassword] = useState('');
+  const vmIP = process.env.REACT_APP_VM_IP_ADDRESS;
+  const backend = process.env.REACT_APP_BACKEND;
+  console.log(vmIP);
+  console.log(backend);
 
   function requestVMDeployment(event) {
     event.preventDefault();
@@ -79,7 +83,7 @@ export default function DeployVM() {
 
   function accessVM() {
     if (port) {
-      window.open(`http://172.30.115.164:${port}`);
+      window.open(`http://${vmIP}:${port}`);
     }
   }
   return (
