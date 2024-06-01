@@ -50,8 +50,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
                         .permitAll()
-                        .requestMatchers("/api/v1/users/password").hasAnyRole(USER.name())
-                        .requestMatchers(PUT, "/api/v1/users/password").hasAnyAuthority(USER_UPDATE.name())
+                        .requestMatchers("/api/v1/users/password").hasAnyRole(USER.name(),ADMIN.name())
+                        .requestMatchers(PUT, "/api/v1/users/password").hasAnyAuthority(USER_UPDATE.name(),ADMIN_UPDATE.name())
                         .requestMatchers("/api/v1/users/**").hasAnyRole(USER.name(), ADMIN.name())
                         .requestMatchers(GET, "/api/v1/users/**").hasAnyAuthority(USER_READ.name(), ADMIN_READ.name())
                         .requestMatchers(POST, "/api/v1/users/**")
@@ -71,8 +71,10 @@ public class SecurityConfiguration {
                         // ADMIN_UPDATE.name())
                         // .requestMatchers(DELETE,
                         // "/api/v1/admin/**").hasAnyAuthority(USER_DELETE.name(), ADMIN_DELETE.name())
-                        .requestMatchers("/api/v1/containers/user/**").hasAnyRole(ADMIN.name())
-                        .requestMatchers(GET, "/api/v1/containers/user/**").hasAnyAuthority(ADMIN_READ.name())
+                        //.requestMatchers("/api/v1/containers/").hasAnyRole(ADMIN.name(),USER.name())
+                        .requestMatchers(GET, "/api/v1/containers/").hasAnyAuthority(ADMIN_READ.name())
+                        .requestMatchers(POST, "/api/v1/containers/").hasAnyAuthority(USER_CREATE.name(), ADMIN_CREATE.name())
+                        .requestMatchers(DELETE, "/api/v1/containers/**").hasAnyAuthority(USER_DELETE.name(), ADMIN_DELETE.name())
 
                         .anyRequest()
                         .authenticated())
