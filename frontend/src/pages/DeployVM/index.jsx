@@ -71,12 +71,10 @@ export default function DeployVM() {
       .then((response) => response.json())
       .then((additionalData) => {
         console.log(additionalData);
-        // Handle the response of the second fetch
       })
       .catch((error) => {
         console.error('Error:', error);
         setLoading(false);
-        // Optionally handle error state here
       });
   }
 

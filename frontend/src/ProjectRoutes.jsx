@@ -8,10 +8,8 @@ import {
 import { AuthContext } from './AuthContext';
 import Home from 'pages/Home';
 import NotFound from 'pages/NotFound';
-import WireframeOne from 'pages/WireframeOne';
 import UserProfile from 'pages/UserProfile';
 import AdminView from 'pages/AdminView';
-import WireframeFour from 'pages/WireframeFour';
 import SignUp from 'pages/SignUp';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
@@ -31,13 +29,21 @@ const ProjectRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="wireframeone" element={<WireframeOne />} />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
         <Route
           path="user"
           element={
             <ProtectedRoute>
               <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="home"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
             </ProtectedRoute>
           }
         />
@@ -49,16 +55,7 @@ const ProjectRoutes = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="wireframefour" element={<WireframeFour />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route
-          path="home"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+
         <Route
           path="deploy-vm"
           element={
