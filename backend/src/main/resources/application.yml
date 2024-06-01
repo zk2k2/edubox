@@ -5,10 +5,14 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
+
+
   jpa:
+    open-in-view: false
+    show-sql: true
     hibernate:
       ddl-auto: update
-    show-sql: false
+
     properties:
       hibernate:
         format_sql: true
