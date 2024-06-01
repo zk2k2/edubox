@@ -27,7 +27,8 @@ function Logo() {
   Cookies.set('issuedAt', userInfo.iat, secureOptions);
   Cookies.set('expiration', userInfo.exp, secureOptions);
 } */
-const BACKEND_URL = process.env.REACT_APP_URL_BACKEND;
+const BACKEND_URL = process.env.REACT_APP_BACKEND;
+console.log(BACKEND_URL);
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +37,7 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { setIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -66,8 +67,6 @@ function LoginForm() {
 
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
-
-
 
     if (isEmailValid && isPasswordValid) {
       const authenticationRequest = {

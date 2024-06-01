@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import { AppSidebar } from 'components/AppSidebar';
 import { AuthContext } from '../../AuthContext';
 import { Select } from '../../components';
+import Cookies from 'js-cookie';
 
 export default function DeployVM() {
   const { userName, role } = useContext(AuthContext);
@@ -23,6 +24,9 @@ export default function DeployVM() {
   const backend = process.env.REACT_APP_BACKEND;
   const vmBackend = process.env.REACT_APP_VM_BACKEND;
   const secret = process.env.REACT_APP_VM_SECRET;
+  const accessToken = Cookies.get('accessToken');
+  console.log(vmBackend);
+  console.log(backend);
 
   function requestVMDeployment(event) {
     event.preventDefault();
@@ -39,7 +43,7 @@ export default function DeployVM() {
       languages: languages,
     };
 
-    fetch(`${vmBackend}+'createVM'`, {
+    fetch(`${vmBackend}/createVm`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,10 +59,11 @@ export default function DeployVM() {
         setVmPassword(data[2]);
 
         // Perform the second fetch here
-        return fetch(`${backend}+/api/v1/containers'`, {
+        return fetch(`${backend}/api/v1/containers`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
           },
           body: JSON.stringify({
             id: data[0],
@@ -66,14 +71,11 @@ export default function DeployVM() {
             name: name,
             status: 'running',
             port: data[1],
-            created: new Date().toISOString().slice(0, 19),
+            image: image,
           }),
         });
       })
       .then((response) => response.json())
-      .then((additionalData) => {
-        console.log(additionalData);
-      })
       .catch((error) => {
         console.error('Error:', error);
         setLoading(false);
@@ -224,8 +226,10 @@ export default function DeployVM() {
                             />
                           </div>
                           <div className="flex flex-col items-start gap-1.5">
-                            <Text as="p">Tag</Text>
-                            {/* <Select
+                            <Text as="p" className="!font-semibold !text-xl">
+                              Additional installations
+                            </Text>
+                            {/*  <Select
                               shape="round"
                               name="tag"
                               options={[
