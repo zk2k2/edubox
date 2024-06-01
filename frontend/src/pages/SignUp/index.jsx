@@ -31,6 +31,8 @@ function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowconfirmPassword] = useState(false);
   const [role, setRole] = useState('USER');
+  const apiUrl = process.env.REACT_APP_URL_BACKEND;
+  console.log(apiUrl);
   const handleSubmit = (event) => {
     event.preventDefault();
 
