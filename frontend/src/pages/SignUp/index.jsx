@@ -31,6 +31,8 @@ function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowconfirmPassword] = useState(false);
   const [role, setRole] = useState('USER');
+  const apiUrl = process.env.REACT_APP_URL_BACKEND;
+  console.log(apiUrl);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -94,7 +96,7 @@ function SignUpForm() {
     const isPasswordValid = validatePassword(password);
     const isConfirmPasswordValid = validateConfirmPassword();
 
-    const BACKEND_URL = 'http://localhost:8080';
+
 
     if (
       isFirstNameValid &&

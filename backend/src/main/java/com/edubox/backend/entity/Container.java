@@ -17,22 +17,14 @@ import java.util.UUID;
 @Entity
 public class Container {
     @Id
-    @GeneratedValue
-    public UUID id;
+    public String id;
 
     @Column(unique = true)
     public String name;
-    public String operating;
+    public String password;
+    public String image;
     public String status;
-    public String cpu;
-    public String ports;
-    public LocalDateTime laststarted;
-    public String actions;
+    public String port;
+    public LocalDateTime created;
 
-
-    // Ignore the user field during serialization
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    public User user;
 }
