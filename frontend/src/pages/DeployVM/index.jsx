@@ -19,8 +19,8 @@ export default function DeployVM() {
   const [vmPassword, setVmPassword] = useState('');
   const vmIP = process.env.REACT_APP_VM_IP_ADDRESS;
   const backend = process.env.REACT_APP_BACKEND;
-  console.log(vmIP);
-  console.log(backend);
+  const vmBackend = process.env.REACT_APP_VM_BACKEND;
+  const secret = process.env.REACT_APP_VM_SECRET;
 
   function requestVMDeployment(event) {
     event.preventDefault();
@@ -31,14 +31,13 @@ export default function DeployVM() {
     if (nodejs) languages.push(nodejs);
     if (java) languages.push(java);
 
-    const secret = '66687104b6c27da56e1fbacd5636a9e6';
     const data = {
       baseImage: image,
       secret: secret,
       languages: languages,
     };
 
-    fetch('http://127.0.0.1:5000/createVm', {
+    fetch(`${vmBackend}+'createVM'`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,7 +53,7 @@ export default function DeployVM() {
         setVmPassword(data[2]);
 
         // Perform the second fetch here
-        return fetch('http://127.0.0.1:8080/api/v1/containers', {
+        return fetch(`${backend}+/api/v1/containers'`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
