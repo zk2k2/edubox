@@ -16,6 +16,7 @@ import Login from 'pages/Login';
 import DeployVM from 'pages/DeployVM';
 import Temp from 'pages/Temp';
 import Guide from 'pages/Guide';
+import PrivacyPolicy from 'pages/PrivacyPolicy';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -77,6 +78,14 @@ const ProjectRoutes = () => {
           element={
             <ProtectedRoute>
               <Guide />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="privacy-policy"
+          element={
+            <ProtectedRoute>
+              <PrivacyPolicy />
             </ProtectedRoute>
           }
         />

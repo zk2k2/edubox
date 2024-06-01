@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthContext';
 
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.REACT_APP_BACKEND;
 
 export default function Dashboard() {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -73,10 +73,10 @@ export default function Dashboard() {
       link: '/guide',
     },
     {
-      icon: '/images/dashboard_preferences.png',
-      title: 'Manage my preferences',
-      description: 'Stuck? View how our platform works',
-      link: '/admin-view',
+      icon: '/images/privacy_icon.png',
+      title: 'Privacy policy',
+      description: 'View our privacy policy',
+      link: '/privacy-policy',
     },
   ];
 
