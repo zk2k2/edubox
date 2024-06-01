@@ -5,15 +5,25 @@ export const AuthContext = createContext({
   setIsAuthenticated: () => {},
   userName: '',
   setUserName: () => {},
+  role: '',
+  setRole: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
+  const [role, setRole] = useState('');
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, userName, setUserName }}
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        userName,
+        setUserName,
+        role,
+        setRole,
+      }}
     >
       {children}
     </AuthContext.Provider>

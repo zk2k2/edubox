@@ -16,8 +16,7 @@ const BACKEND_URL = 'http://localhost:8080';
 export default function Dashboard() {
   const [collapsed, setCollapsed] = React.useState(false);
   const [firstname, setFirstname] = useState('');
-  const [role, setRole] = useState('');
-  const { userName, setUserName } = useContext(AuthContext);
+  const { userName, setUserName, role, setRole } = useContext(AuthContext);
 
   function getUserInfo() {
     const accessToken = Cookies.get('accessToken');
