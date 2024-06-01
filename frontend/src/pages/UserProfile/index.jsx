@@ -19,7 +19,7 @@ export default function UserProfile() {
   const [status, setStatus] = useState('');
   const [role, setRole] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(null);
-  const BACKEND_URL = process.env.REACT_APP_URL_BACKEND
+  const BACKEND_URL = 'http://localhost:8080';//process.env.REACT_APP_URL_BACKEND
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showNewPasswordConfirmation, setShowNewPasswordConfirmation] = useState(false);
@@ -37,42 +37,44 @@ export default function UserProfile() {
   // State to hold initial data
   const [initialData, setInitialData] = useState({});
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-            BACKEND_URL + '/api/v1/users/currentuser',
-            {
-              method: 'GET',
-              mode: 'cors',
-              headers: {
-                Authorization: 'Bearer ' + accessToken,
-                'Content-Type': 'application/json', // Adjust content type as needed
-              },
-            }
-        );
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
 
-        const data = await response.json();
-        setUserId(data['id']);
-        setFirstName(data['firstname']);
-        setLastName(data['lastname']);
-        setEmail(data['email']);
-        //setPassword(data["password"]);//not needed
-        setRole(data['role']);
-        setStatus(data['status']);
-        setDateOfBirth(data['dateofbirth']);
-        setInitialData(data); // Store initial data
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(
+          BACKEND_URL + '/api/v1/users/currentuser',
+          {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+              Authorization: 'Bearer ' + accessToken,
+              'Content-Type': 'application/json', // Adjust content type as needed
+            },
+          }
+      );
+
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
 
-    fetchUserData(); // Call the async function immediately
-  }, []);
+      const data = await response.json();
+
+      setUserId(data['id']);
+      setFirstName(data['firstname']);
+      setLastName(data['lastname']);
+      setEmail(data['email']);
+      //setPassword(data["password"]);//not needed
+      setRole(data['role']);
+      setStatus(data['status']);
+      setDateOfBirth(data['dateofbirth']);
+      setInitialData(data); // Store initial data
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
+  };
+
+  useEffect(fetchUserData ,[]);// Call the async function immediately
 
   const toggleButtons = () => {
     setShowButtons(!showButtons);
@@ -114,7 +116,6 @@ export default function UserProfile() {
   };
 
   const handleSubmit = (event) => {
-    alert("I'm in handleSubmit");
     event.preventDefault();
     // Create an object to hold updated data
     const updatedData = {
@@ -130,9 +131,6 @@ export default function UserProfile() {
     // Update initial data with updated data
     //setInitialData(updatedData);
     const jsonUpdatedData = JSON.stringify(updatedData);
-    // Log form data as JSON
-    alert(jsonUpdatedData);
-
     fetch(BACKEND_URL + '/api/v1/users/' + userId, {
       method: 'PUT',
       headers: {
@@ -142,11 +140,10 @@ export default function UserProfile() {
       body: jsonUpdatedData,
     })
         .then((response) => response.json())
-        .then((data) => {
-          alert(JSON.stringify(data));
-          changePassword();
+        .then((data) => {changePassword();
         })
         .then(toggleButtons)
+        .then(fetchUserData)
         .catch((error) => {
           alert(error);
         });
@@ -178,7 +175,6 @@ export default function UserProfile() {
             })
             .catch((error) => {
               alert(error);
-              alert(JSON.stringify(changePasswordRequest));
             });
       }
     };
@@ -357,7 +353,7 @@ export default function UserProfile() {
                                 }
                                 disabled={isLocked}
                                 value={firstName}
-                                onChange={setFirstName}
+                                onChange={(e)=>setFirstName(e.target.value)}
                             />
                           </div>
                           <div className="flex flex-col items-start gap-1.5">
@@ -373,7 +369,7 @@ export default function UserProfile() {
                                 }
                                 disabled={isLocked}
                                 value={lastName}
-                                onChange={setLastName}
+                                onChange={(e)=>setLastName(e.target.value)}
                             />
                           </div>
                           <div className="flex flex-col items-start gap-[7px]">
@@ -401,7 +397,7 @@ export default function UserProfile() {
                                 }
                                 disabled={isLocked}
                                 value={formatDate(dateOfBirth)}
-                                onChange={setDateOfBirth}
+                                onChange={(e)=>setDateOfBirth(e.target.value)}
                             />
                           </div>
                         </div>
@@ -432,7 +428,7 @@ export default function UserProfile() {
                                 }
                                 disabled={isLocked}
                                 value={email}
-                                onChange={setEmail}
+                                onChange={(e)=>setEmail(e.target.value)}
                             />
                           </div>
                           <div className="flex flex-col items-start mt-[18px] gap-[7px]">
@@ -453,7 +449,7 @@ export default function UserProfile() {
                                 disabled={isLocked}
                                 placeholder="Enter your password"
                                 value={password}
-                                onChange={setPassword}
+                                onChange={(e)=>setPassword}
                             />
                             <div style={{display: showButtons ? 'none' : 'block'}}>
                               <div className="flex flex-row mt-[18px] gap-[20px]">
@@ -475,11 +471,11 @@ export default function UserProfile() {
                                       disabled={isLocked}
                                       placeholder="Enter your new password"
                                       value={newPassword}
-                                      onChange={setNewPassword}
+                                      onChange={(e)=>setNewPassword(e.target.value)}
                                   />
                                 </div>
                                 <div className="flex-1">
-                                  <Text as="p" className="mb-[7px]">Confirm new password</Text>
+                                  <Text as="p" className="mb-[7px]">Confirm password</Text>
                                   <Input
                                       shape="round"
                                       type={showNewPasswordConfirmation ? 'text' : 'password'}
@@ -500,7 +496,7 @@ export default function UserProfile() {
                                       disabled={isLocked}
                                       placeholder="Enter your password"
                                       value={newPasswordConfirmation}
-                                      onChange={setNewPasswordConfirmation}
+                                      onChange={(e)=>setNewPasswordConfirmation(e.target.value)}
                                   />
                                 </div>
                               </div>
@@ -517,6 +513,7 @@ export default function UserProfile() {
                               onClick={() => {
                                 toggleButtons();
                                 deleteAccount();
+                                window.location.reload();
                               }}
                           >
                             Delete my account
