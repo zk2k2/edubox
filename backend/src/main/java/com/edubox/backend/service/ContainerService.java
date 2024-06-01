@@ -8,6 +8,7 @@ import com.edubox.backend.repository.ContainerRepository;
 import com.edubox.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -40,8 +41,10 @@ public class ContainerService {
     }
 
 
-    public void deleteContainer(String id) {
-        repository.deleteById(id);
+
+    @Transactional
+    public void deleteContainer(String containerId) {
+        repository.deleteContainerById(containerId);
     }
 
 
