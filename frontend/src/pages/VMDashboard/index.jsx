@@ -57,7 +57,7 @@ export default function AdminView() {
   const handlestopvm = async (VMid) => {
     try {
       const response = await fetch(
-          `${BACKEND_URL}/api/v1/coantainer/${VMid}`,
+          `${BACKEND_URL}/api/v1/coantainer/${VM.id}`,
           {
             method: 'DELETE',
             headers: {
