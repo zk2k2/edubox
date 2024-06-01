@@ -19,7 +19,7 @@ export default function UserProfile() {
   const [status, setStatus] = useState('');
   const [role, setRole] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(null);
-
+  const BACKEND_URL = process.env.REACT_APP_URL_BACKEND
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showNewPasswordConfirmation, setShowNewPasswordConfirmation] = useState(false);
