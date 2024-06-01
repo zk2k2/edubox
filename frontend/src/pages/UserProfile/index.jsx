@@ -349,7 +349,7 @@ export default function UserProfile() {
                                 placeholder={
                                   isLocked
                                       ? initialData.firstname
-                                      : 'Enter your first name'
+                                      : 'Enter your new first name'
                                 }
                                 disabled={isLocked}
                                 value={firstName}
@@ -365,7 +365,7 @@ export default function UserProfile() {
                                 placeholder={
                                   isLocked
                                       ? initialData.lastname
-                                      : 'Enter your last name'
+                                      : 'Enter your new last name'
                                 }
                                 disabled={isLocked}
                                 value={lastName}
@@ -424,7 +424,7 @@ export default function UserProfile() {
                                 name="email"
                                 className="self-stretch sm:px-5 border-black-900_26 border border-solid"
                                 placeholder={
-                                  isLocked ? initialData.email : 'Enter your email'
+                                  isLocked ? initialData.email : 'Enter your new email'
                                 }
                                 disabled={isLocked}
                                 value={email}
@@ -447,9 +447,9 @@ export default function UserProfile() {
                                 }
                                 className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
                                 disabled={isLocked}
-                                placeholder="Enter your password"
+                                placeholder={isLocked ? "Your password is hidden, you can only edit it" : "Enter your old password"}
                                 value={password}
-                                onChange={(e)=>setPassword}
+                                onChange={(e)=>setPassword(e.target.value)}
                             />
                             <div style={{display: showButtons ? 'none' : 'block'}}>
                               <div className="flex flex-row mt-[18px] gap-[20px]">

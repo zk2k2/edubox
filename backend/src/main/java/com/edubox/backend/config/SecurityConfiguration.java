@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                                 .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
                                                 .permitAll()
 
+                                        .requestMatchers(GET, "/api/v1/users/currentuser").hasAnyRole(USER.name(), ADMIN.name())
                                         .requestMatchers(GET, "/api/v1/users/currentuser").hasAnyAuthority(USER_READ.name(), ADMIN_READ.name())
                                         .requestMatchers("/api/v1/users/password").hasAnyRole(USER.name(), ADMIN.name())
 //                                                .requestMatchers(PUT, "/api/v1/users/password")

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Img, Text, Heading } from '../../components';
+import { Img, Text,Input, Heading } from '../../components';
 import Header from '../../components/Header';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import Cookies from 'js-cookie';
@@ -33,7 +33,7 @@ function UserRow({
   return (
     <>
       <div className="shrink-0 mt-7 h-px border border-solid bg-neutral-500 bg-opacity-20 border-neutral-500 border-opacity-20" />
-      <div className="flex gap-5 justify-between mt-10 mr-8 ml-8 font-semibold max-md:flex-wrap max-md:mr-2.5 max-md:max-w-full">
+      <div className="flex gap-5 justify-between mt-10 mr-8 ml-8 font-medium max-md:flex-wrap max-md:mr-2.5 max-md:max-w-full">
         <div className="flex-1 text-center">{firstName}</div>
         <div className="flex-1 text-center">{lastName}</div>
         <div className="flex-1 text-center">{role}</div>
@@ -297,7 +297,7 @@ export default function AdminView() {
               <main className="flex p-[13px] bg-white-A700 mx-5 mt-5">
                 <section className="flex flex-col px-5 py-12 w-full text-lg font-medium text-black bg-white-A700 max-md:mt-10 max-md:max-w-full">
                   <div className="flex gap-4 pr-20 whitespace-nowrap text-neutral-500 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-                    <input
+                    <Input
                       type="text"
                       placeholder="Search by name"
                       value={searchTerm}
