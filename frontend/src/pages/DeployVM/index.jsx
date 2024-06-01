@@ -9,7 +9,7 @@ import { Select } from '../../components';
 export default function DeployVM() {
   const { userName } = useContext(AuthContext);
   const [image, setImage] = useState('');
-  const [tag, setTag] = useState('');
+  const [name, setName] = useState('');
   const [python, setPython] = useState('python3');
   const [nodejs, setNodejs] = useState('nodejs20');
   const [java, setJava] = useState('');
@@ -48,6 +48,27 @@ export default function DeployVM() {
         setSuccess(true);
         setPort(data[1]);
         setVmPassword(data[2]);
+
+        // Perform the second fetch here
+        return fetch('http://127.0.0.1:8080/api/v1/containers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: data[0],
+            password: data[2],
+            name: name,
+            status: 'running',
+            port: data[1],
+            created: new Date().toISOString().slice(0, 19),
+          }),
+        });
+      })
+      .then((response) => response.json())
+      .then((additionalData) => {
+        console.log(additionalData);
+        // Handle the response of the second fetch
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -181,6 +202,7 @@ export default function DeployVM() {
                               name="name"
                               placeholder={`vm-32`}
                               className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                              onChange={(event) => setName(event.target.value)}
                             />
                           </div>
                           <div className="flex flex-col items-start gap-1.5">
