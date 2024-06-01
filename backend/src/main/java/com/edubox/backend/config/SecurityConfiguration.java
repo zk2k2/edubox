@@ -72,9 +72,9 @@ public class SecurityConfiguration {
                         // .requestMatchers(DELETE,
                         // "/api/v1/admin/**").hasAnyAuthority(USER_DELETE.name(), ADMIN_DELETE.name())
                         //.requestMatchers("/api/v1/containers/").hasAnyRole(ADMIN.name(),USER.name())
-                        .requestMatchers(GET, "/api/v1/containers/").hasAnyAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST, "/api/v1/containers/").hasAnyAuthority(USER_CREATE.name(), ADMIN_CREATE.name())
-                        .requestMatchers(DELETE, "/api/v1/containers/**").hasAnyAuthority(USER_DELETE.name(), ADMIN_DELETE.name())
+                        .requestMatchers(GET, "/api/v1/containers/").hasAnyRole(ADMIN.name())
+                        .requestMatchers(POST, "/api/v1/containers/").hasAnyRole(ADMIN.name(),USER.name())
+                        .requestMatchers(DELETE, "/api/v1/containers/**").hasAnyRole(ADMIN.name(),USER.name())
 
                         .anyRequest()
                         .authenticated())
