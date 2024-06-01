@@ -1,12 +1,12 @@
 package com.edubox.backend.DTOs;
 
-import java.time.LocalDateTime;
 
 public class CreateContainerDTO {
+    public String id;
     public String name;
-    public String operating;
+    public String password;
+    public String image;
     public String status;
-    public String cpu;
-    public String ports;
-    public String actions;
+    public String port;
+
 }

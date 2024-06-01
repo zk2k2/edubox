@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ContainerRepository extends JpaRepository<Container, UUID> {
+public interface ContainerRepository extends JpaRepository<Container, String> {
 
-    List<Container> findByUser_Id(UUID userId);
 
-    List<Container> findByUser_Email(String userEmail);
+
 }
