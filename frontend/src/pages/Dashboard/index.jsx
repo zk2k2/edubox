@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthContext';
 
-const BACKEND_URL = 'http://localhost:8080';
+
 
 export default function Dashboard() {
   const [collapsed, setCollapsed] = React.useState(false);

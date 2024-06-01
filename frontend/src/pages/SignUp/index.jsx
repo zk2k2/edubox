@@ -96,7 +96,7 @@ function SignUpForm() {
     const isPasswordValid = validatePassword(password);
     const isConfirmPasswordValid = validateConfirmPassword();
 
-    const BACKEND_URL = 'http://localhost:8080';
+
 
     if (
       isFirstNameValid &&

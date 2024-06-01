@@ -67,7 +67,7 @@ function LoginForm() {
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
-    const BACKEND_URL = 'http://localhost:8080';
+
 
     if (isEmailValid && isPasswordValid) {
       const authenticationRequest = {

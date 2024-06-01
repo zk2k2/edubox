@@ -52,7 +52,7 @@ export default function AdminView() {
   const [filteredcoantainer, setFilteredcoantainer] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc'); // New state for sort order
 
-  const BACKEND_URL = 'http://localhost:8080';
+
 
   const handlestopvm = async (VMid) => {
     try {
