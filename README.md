@@ -37,7 +37,7 @@ Ensure you have the following installed on your system:
     npm start
     ```
 
-### 🔧 API Setup
+### 🔧 VM API Setup
 1. **Open a WSL session and run the following commands:**
     ```sh
     root@BEST-TECHNOLOGY:/mnt/c/Users/USER/Documents/Projects/edubox# cd vm_backend
