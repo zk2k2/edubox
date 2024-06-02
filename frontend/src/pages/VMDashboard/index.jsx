@@ -73,7 +73,7 @@ function UserRow({
   );
 }
 
-export default function Vm_dashboard() {
+export default function VMDashboard() {
   const accessToken = Cookies.get('accessToken');
   const [VMS, setVMS] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -188,7 +188,7 @@ export default function Vm_dashboard() {
                       as="p"
                       className="!text-blue-A700 !font-medium"
                     >
-                      Dashboard
+                      Home
                     </Text>
                     <Text
                       size="s"
@@ -202,7 +202,7 @@ export default function Vm_dashboard() {
                       as="p"
                       className="!text-blue-A700 !font-medium"
                     >
-                      Manage Edubox Containers
+                      Virtual Machines
                     </Text>
                   </div>
                   <div className="flex sm:flex-col items-center gap-6">
@@ -213,7 +213,7 @@ export default function Vm_dashboard() {
                     />
                     <div className="flex flex-col items-start gap-[3px]">
                       <Heading size="md" as="h1">
-                        Manage Edubox Conntainers
+                        Manage Edubox Virtual Machines
                       </Heading>
                       <Text as="p" className="!font-normal">
                         Manage all of Edubox’s user Conntainers
