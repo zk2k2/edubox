@@ -76,7 +76,7 @@ export default function Dashboard() {
       icon: '/images/privacy_icon.png',
       title: 'Privacy policy',
       description: 'View our privacy policy',
-      link: '/privacy-policy',
+      link: '/admin-view',
     },
   ];
 

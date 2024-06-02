@@ -86,7 +86,6 @@ function LoginForm() {
             expires: 7,
             sameSite: 'Strict',
           });
-          console.log(data);
           setIsAuthenticated(true);
           navigate('/home');
         })

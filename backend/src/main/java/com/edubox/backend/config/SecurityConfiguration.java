@@ -50,10 +50,12 @@ public class SecurityConfiguration {
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
                                                 .permitAll()
-                                                .requestMatchers("/api/v1/users/password")
-                                                .hasAnyRole(USER.name(), ADMIN.name())
-                                                .requestMatchers(PUT, "/api/v1/users/password")
-                                                .hasAnyAuthority(USER_UPDATE.name(), ADMIN_UPDATE.name())
+
+                                        .requestMatchers(GET, "/api/v1/users/currentuser").hasAnyRole(USER.name(), ADMIN.name())
+                                        .requestMatchers(GET, "/api/v1/users/currentuser").hasAnyAuthority(USER_READ.name(), ADMIN_READ.name())
+                                        .requestMatchers("/api/v1/users/password").hasAnyRole(USER.name(), ADMIN.name())
+//                                                .requestMatchers(PUT, "/api/v1/users/password")
+//                                                .hasAnyAuthority(USER_UPDATE.name(), ADMIN_UPDATE.name())
                                                 .requestMatchers("/api/v1/users/**")
                                                 .hasAnyRole(USER.name(), ADMIN.name())
                                                 .requestMatchers(GET, "/api/v1/users/**")
@@ -64,10 +66,9 @@ public class SecurityConfiguration {
                                                 .hasAnyAuthority(USER_UPDATE.name(), ADMIN_UPDATE.name())
                                                 .requestMatchers(DELETE, "/api/v1/users/**")
                                                 .hasAnyAuthority(USER_DELETE.name(), ADMIN_DELETE.name())
-                                                .requestMatchers("/api/v1/users/currentuser")
-                                                .hasAnyRole(USER.name(), ADMIN.name())
-                                                .requestMatchers(GET, "/api/v1/users/currentuser")
-                                                .hasAnyAuthority(USER_READ.name(), ADMIN_READ.name())
+//                                                .requestMatchers("/api/v1/users/currentuser")
+//                                                .hasAnyRole(USER.name(), ADMIN.name())
+
                                                 // .requestMatchers(GET,
                                                 // "/api/v1/admin/**").hasAnyAuthority(USER_READ.name(),
                                                 // ADMIN_READ.name())
