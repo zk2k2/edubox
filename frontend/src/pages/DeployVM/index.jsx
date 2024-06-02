@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Button, Input, Text, Img, Heading } from '../../components';
 import Header from '../../components/Header';
@@ -27,6 +27,17 @@ export default function DeployVM() {
   const vmBackend = process.env.REACT_APP_VM_BACKEND;
   const secret = process.env.REACT_APP_VM_SECRET;
   const accessToken = Cookies.get('accessToken');
+
+  useEffect(() => {
+    // Check localStorage for success state and relevant data
+    const successState = localStorage.getItem('success');
+    if (successState) {
+      setSuccess(true);
+      setVmId(localStorage.getItem('vmId'));
+      setPort(localStorage.getItem('port'));
+      setVmPassword(localStorage.getItem('vmPassword'));
+    }
+  }, []);
 
   function requestVMDeployment(event) {
     event.preventDefault();
@@ -58,6 +69,12 @@ export default function DeployVM() {
         setVmId(data[0]);
         setPort(data[1]);
         setVmPassword(data[2]);
+
+        // Save success state and relevant data in localStorage
+        localStorage.setItem('success', 'true');
+        localStorage.setItem('vmId', data[0]);
+        localStorage.setItem('port', data[1]);
+        localStorage.setItem('vmPassword', data[2]);
 
         // Perform the second fetch here
         return fetch(`${backend}/api/v1/containers`, {
@@ -125,6 +142,12 @@ export default function DeployVM() {
       if (!deleteContainerResponse.ok) {
         throw new Error('Failed to delete container');
       }
+
+      // Clear localStorage upon VM deletion
+      localStorage.removeItem('success');
+      localStorage.removeItem('vmId');
+      localStorage.removeItem('port');
+      localStorage.removeItem('vmPassword');
 
       nav('/home');
     } catch (error) {

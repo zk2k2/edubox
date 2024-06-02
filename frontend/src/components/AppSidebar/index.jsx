@@ -46,7 +46,7 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
               className="h-[41px] w-[41px] object-cover"
             />
           }
-          component={<Link to="/virtual-machines" />}
+          component={<Link to="/vms" />}
         >
           Virtual Machines
         </MenuItem>

@@ -17,7 +17,7 @@ import DeployVM from 'pages/DeployVM';
 import Temp from 'pages/Temp';
 import Guide from 'pages/Guide';
 import PrivacyPolicy from 'pages/PrivacyPolicy';
-import Vm_dashboard from 'pages/VMDashboard';
+import VMDashboard from 'pages/VMDashboard';
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
   console.log('isAuthenticated', isAuthenticated);
@@ -41,10 +41,10 @@ const ProjectRoutes = () => {
           }
         />
         <Route
-          path="VMDashboard"
+          path="vms"
           element={
             <ProtectedRoute>
-              <Vm_dashboard />
+              <VMDashboard />
             </ProtectedRoute>
           }
         />
