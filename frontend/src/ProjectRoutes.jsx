@@ -14,7 +14,6 @@ import SignUp from 'pages/SignUp';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import DeployVM from 'pages/DeployVM';
-import Temp from 'pages/Temp';
 import Guide from 'pages/Guide';
 import PrivacyPolicy from 'pages/PrivacyPolicy';
 import VMDashboard from 'pages/VMDashboard';
@@ -57,7 +56,7 @@ const ProjectRoutes = () => {
           }
         />
         <Route
-          path="admin-view"
+          path="users"
           element={
             <ProtectedRoute>
               <AdminView />
@@ -73,14 +72,7 @@ const ProjectRoutes = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="temp"
-          element={
-            <ProtectedRoute>
-              <Temp />
-            </ProtectedRoute>
-          }
-        />
+
         <Route
           path="guide"
           element={

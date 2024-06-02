@@ -59,7 +59,7 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
                 className="h-[32px] w-[32px] object-cover"
               />
             }
-            component={<Link to="/user-management" />}
+            component={<Link to="/users" />}
           >
             User Management
           </MenuItem>

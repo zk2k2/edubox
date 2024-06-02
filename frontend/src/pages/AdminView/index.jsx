@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { Img, Text,Input, Heading } from '../../components';
+import { Img, Text, Input, Heading } from '../../components';
 import Header from '../../components/Header';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
+import { AppSidebar } from 'components/AppSidebar';
 import Cookies from 'js-cookie';
+import { AuthContext } from 'AuthContext';
 
 function UserRow({
   id,
@@ -72,10 +74,11 @@ function UserRow({
 
 export default function AdminView() {
   const accessToken = Cookies.get('accessToken');
-  const [users, setUsers] = useState([]); // Initialize users state as an array
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [sortOrder, setSortOrder] = useState('asc'); // New state for sort order
+  const [sortOrder, setSortOrder] = useState('asc');
+  const { role, userName } = useContext(AuthContext);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND;
 
@@ -170,87 +173,9 @@ export default function AdminView() {
       </Helmet>
       <div className="w-full bg-gray-50">
         <div className="flex flex-col">
-          <Header className="p-[15px] bg-blue-A700" />
+          <Header className="p-[15px] bg-blue-A700" firstname={userName} />
           <div className="flex md:flex-col justify-center items-start w-[98%] md:w-full gap-6 md:p-5">
-            <Sidebar
-              width="282px !important"
-              collapsedWidth="80px !important"
-              className="flex flex-col h-screen top-0 p-6 sm:p-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
-            >
-              <Menu
-                menuItemStyles={{
-                  button: {
-                    padding: 0,
-                    gap: '22px',
-                    alignSelf: 'start',
-                    color: '#505968',
-                    fontWeight: 400,
-                    fontSize: '20px',
-                    paddingTop: '4px',
-                    paddingBottom: '4px',
-                    [`&:hover, &.ps-active`]: { color: '#000000' },
-                  },
-                }}
-                rootStyles={{ ['&>ul']: { gap: '0.93px' } }}
-                className="flex flex-col w-full mt-[26px] mb-[295px] pb-[22px] sm:pb-5"
-              >
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_sandbox.png"
-                      alt="sandbox_one"
-                      className="h-[41px] w-[41px] object-cover"
-                    />
-                  }
-                >
-                  Virtual Machines
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_group.png"
-                      alt="image"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  User Management
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_user_28x28.png"
-                      alt="user_one"
-                      className="h-[28px] w-[28px] object-cover"
-                    />
-                  }
-                >
-                  My Account
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_info.png"
-                      alt="info_one"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  Assistance
-                </MenuItem>
-                <MenuItem
-                  icon={
-                    <Img
-                      src="images/img_gear.png"
-                      alt="gear_one"
-                      className="h-[32px] w-[32px] object-cover"
-                    />
-                  }
-                >
-                  Settings
-                </MenuItem>
-              </Menu>
-            </Sidebar>
+            <AppSidebar role={role} />
             <div className="flex flex-col md:self-stretch gap-6 flex-1">
               <div className="flex p-[13px] bg-white-A700 mx-5 mt-5">
                 <div className="flex flex-col w-[56%] md:w-full mt-1.5 ml-[13px] gap-[15px] md:ml-0">
