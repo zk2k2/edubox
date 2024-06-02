@@ -125,20 +125,28 @@ export default function DeployVM() {
                       to access it.
                     </Text>
                     <Text as="h3" className="!font-normal !text-xl mb-3">
-                      Your VM password is 66687104b6c27da56e1fbacd5636a9e6,
-                      please keep it safe.
+                      Your VM password is, please keep it safe.
                     </Text>
-                    <button
-                      type="submit"
-                      className="sign-up-button w-full h-12 mt-5"
-                    >
+                    <button className="sign-up-button w-full h-12 mt-5">
                       <div className="flex justify-center">
                         <Text as="h3" className=" !text-white-A700">
-                          Access my Virtual Machine
+                          Launch my Virtual Machine
                         </Text>
                         <img
                           src="images/external_link.png"
                           className=" w-7 h-7 mx-3"
+                          alt=""
+                        />
+                      </div>
+                    </button>
+                    <button className="sign-up-button !bg-gray-200 w-full h-12 mt-5">
+                      <div className="flex justify-center">
+                        <Text as="h3" className=" !text-black">
+                          Stop My Virtual Machine
+                        </Text>
+                        <img
+                          src="images/img_stop.png"
+                          className=" w-6 h-6 mx-3 mt-0.5"
                           alt=""
                         />
                       </div>

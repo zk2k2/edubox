@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { Button, Input,Select, Text, Img, Heading } from '../../components';
+import { Button, Input, Select, Text, Img, Heading } from '../../components';
 import Header from '../../components/Header';
+import { AppSidebar } from 'components/AppSidebar';
 import { MenuItem, Menu, Sidebar } from 'react-pro-sidebar';
 import Cookies from 'js-cookie';
+import { AuthContext } from 'AuthContext';
 
 export default function UserProfile() {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,14 +17,16 @@ export default function UserProfile() {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const [status, setStatus] = useState('');
   const [role, setRole] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(null);
-  const BACKEND_URL = 'http://localhost:8080';//process.env.REACT_APP_URL_BACKEND
+  const BACKEND_URL = 'http://localhost:8080'; //process.env.REACT_APP_URL_BACKEND
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showNewPasswordConfirmation, setShowNewPasswordConfirmation] = useState(false);
+  const [showNewPasswordConfirmation, setShowNewPasswordConfirmation] =
+    useState(false);
 
   const options = [
     { value: 'STUDENT', label: 'STUDENT' },
@@ -37,22 +41,16 @@ export default function UserProfile() {
   // State to hold initial data
   const [initialData, setInitialData] = useState({});
 
-
-
   const fetchUserData = async () => {
     try {
-      const response = await fetch(
-          BACKEND_URL + '/api/v1/users/currentuser',
-          {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-              Authorization: 'Bearer ' + accessToken,
-              'Content-Type': 'application/json', // Adjust content type as needed
-            },
-          }
-      );
-
+      const response = await fetch(BACKEND_URL + '/api/v1/users/currentuser', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+          'Content-Type': 'application/json', // Adjust content type as needed
+        },
+      });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -74,7 +72,13 @@ export default function UserProfile() {
     }
   };
 
-  useEffect(fetchUserData ,[]);// Call the async function immediately
+  useEffect(() => {
+    fetchUserData();
+    return () => {
+      // Cleanup logic here, if needed
+    };
+  }, []);
+  // Call the async function immediately
 
   const toggleButtons = () => {
     setShowButtons(!showButtons);
@@ -107,12 +111,12 @@ export default function UserProfile() {
         Authorization: 'Bearer ' + accessToken,
       },
     })
-        .then((response) => {
-          alert('The user was deleted successfully');
-        })
-        .catch((error) => {
-          alert('Error: ' + error);
-        });
+      .then((response) => {
+        alert('The user was deleted successfully');
+      })
+      .catch((error) => {
+        alert('Error: ' + error);
+      });
   };
 
   const handleSubmit = (event) => {
@@ -139,20 +143,21 @@ export default function UserProfile() {
       },
       body: jsonUpdatedData,
     })
-        .then((response) => response.json())
-        .then((data) => {changePassword();
-        })
-        .then(toggleButtons)
-        .then(fetchUserData)
-        .catch((error) => {
-          alert(error);
-        });
+      .then((response) => response.json())
+      .then((data) => {
+        changePassword();
+      })
+      .then(toggleButtons)
+      .then(fetchUserData)
+      .catch((error) => {
+        alert(error);
+      });
 
     const changePassword = async () => {
       if (
-          password !== '' &&
-          newPassword !== '' &&
-          newPasswordConfirmation !== ''
+        password !== '' &&
+        newPassword !== '' &&
+        newPasswordConfirmation !== ''
       ) {
         const changePasswordRequest = {
           currentPassword: password,
@@ -169,13 +174,13 @@ export default function UserProfile() {
           },
           body: JSON.stringify(changePasswordRequest),
         })
-            .then((response) => response.text())
-            .then((data) => {
-              alert(data);
-            })
-            .catch((error) => {
-              alert(error);
-            });
+          .then((response) => response.text())
+          .then((data) => {
+            alert(data);
+          })
+          .catch((error) => {
+            alert(error);
+          });
       }
     };
   };
@@ -187,346 +192,291 @@ export default function UserProfile() {
     return `${year}-${month}-${day}`;
   };
 
-  const getOptionByValue = (value) => options.find(option => option.value === value) || options[2];
-
-
-
+  const getOptionByValue = (value) =>
+    options.find((option) => option.value === value) || options[2];
 
   return (
-      <>
-        <Helmet>
-          <title>Yassine's Application1</title>
-          <meta
-              name="description"
-              content="Web site created using create-react-app"
-          />
-        </Helmet>
-        <div className="w-full bg-gray-50">
-          <div className="flex flex-col">
-            <Header className="p-[15px] bg-blue-A700" />
-            <div className="flex md:flex-col justify-between items-start w-[98%] md:w-full gap-5 md:p-5">
-              <Sidebar
-                  width="282px !important"
-                  collapsedWidth="80px !important"
-                  collapsed={collapsed}
-                  className="flex flex-col h-screen top-0 py-[50px] md:py-5 bg-blue_gray-50 !sticky overflow-auto md:hidden"
-              >
-                <Menu
-                    menuItemStyles={{
-                      button: {
-                        padding: '12px', // Adjust padding to increase vertical spacing
-                        gap: '22px',
-                        alignSelf: 'start',
-                        color: '#505968',
-                        fontWeight: 400,
-                        fontSize: '20px',
-                      },
-                    }}
-                    rootStyles={{ ['&>ul']: { gap: '0.93px' } }}
-                    className="flex flex-col w-full mb-[269px] pb-[22px] sm:pb-5"
-                >
-                  <MenuItem
-                      icon={
+    <>
+      <Helmet>
+        <title>Yassine's Application1</title>
+        <meta
+          name="description"
+          content="Web site created using create-react-app"
+        />
+      </Helmet>
+      <div className="w-full bg-gray-50">
+        <div className="flex flex-col">
+          <Header className="p-[15px] bg-blue-A700" firstname={firstName} />
+          <div className="flex md:flex-col justify-between items-start w-[98%] md:w-full gap-5 md:p-5">
+            <AppSidebar role={role} />
+            <div className="flex flex-col md:self-stretch gap-[18px] flex-1">
+              <div className="flex p-[13px] bg-white-A700 mx-5 mt-5">
+                <div className="flex  w-[30%] md:w-full ml-1.5 gap-5 md:ml-0">
+                  <div className="w-[20%]">
+                    <div className="bg-blue-A700 rounded-[1000px]">
+                      <Img
+                        src="images/img_user.png"
+                        alt="user_three"
+                        className="h-[86px] w-full md:h-auto rounded-tl-[43px] rounded-tr-[43px] object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-start gap-1.5">
+                    <Heading size="md" as="h1">
+                      {initialData.firstname + ' ' + initialData.lastname}
+                    </Heading>
+                    <Text as="p" className="!text-blue_gray-700">
+                      {initialData.role}
+                    </Text>
+                  </div>
+                </div>
+              </div>
+              <div className="p-5 m-5 bg-white-A700">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-col mb-[67px] gap-[25px]">
+                    <div className="flex justify-between items-center gap-5">
+                      <Heading size="s" as="h2">
+                        Profile details
+                      </Heading>
+                      <div className="flex">
+                        <div className="flex">
+                          <button
+                            type="button"
+                            className={`sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px] flex items-center justify-center text-center cursor-pointer h-[42px] px-[35px] text-lg bg-gray-400 text-white-A700 mr-2`}
+                            style={{ display: showButtons ? 'none' : 'block' }}
+                            onClick={toggleButtons}
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="submit"
+                            className={`sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px] flex items-center justify-center text-center cursor-pointer h-[42px] px-[35px] text-lg bg-blue-500 text-white-A700`}
+                            style={{ display: showButtons ? 'none' : 'block' }}
+                          >
+                            Confirm
+                          </button>
+                        </div>
                         <Img
-                            src="images/img_sandbox.png"
-                            alt="sandbox_one"
-                            className="h-[41px] w-[41px] object-cover"
-                        />
-                      }
-                  >
-                    Virtual Machines
-                  </MenuItem>
-                  <MenuItem
-                      icon={
-                        <Img
-                            src="images/img_group.png"
-                            alt="image"
-                            className="h-[32px] w-[32px] object-cover"
-                        />
-                      }
-                  >
-                    User Management
-                  </MenuItem>
-                  <MenuItem
-                      icon={
-                        <Img
-                            src="images/img_user_1.png"
-                            alt="user_one"
-                            className="h-[28px] w-[28px] object-cover"
-                        />
-                      }
-                  >
-                    My Account
-                  </MenuItem>
-                  <MenuItem
-                      icon={
-                        <Img
-                            src="images/img_info.png"
-                            alt="info_one"
-                            className="h-[32px] w-[32px] object-cover"
-                        />
-                      }
-                  >
-                    Assistance
-                  </MenuItem>
-                  <MenuItem
-                      icon={
-                        <Img
-                            src="images/img_gear.png"
-                            alt="gear_one"
-                            className="h-[32px] w-[32px] object-cover"
-                        />
-                      }
-                  >
-                    Settings
-                  </MenuItem>
-                </Menu>
-              </Sidebar>
-              <div className="flex flex-col md:self-stretch gap-[18px] flex-1">
-                <div className="flex p-[13px] bg-white-A700 mx-5 mt-5">
-                  <div className="flex  w-[30%] md:w-full ml-1.5 gap-5 md:ml-0">
-                    <div className="w-[20%]">
-                      <div className="bg-blue-A700 rounded-[1000px]">
-                        <Img
-                            src="images/img_user.png"
-                            alt="user_three"
-                            className="h-[86px] w-full md:h-auto rounded-tl-[43px] rounded-tr-[43px] object-cover"
+                          src="images/img_edit.png"
+                          alt="edit_one"
+                          className="self-end w-[28px] object-cover"
+                          style={{ display: showButtons ? 'block' : 'none' }}
+                          onClick={toggleButtons}
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col items-start gap-1.5">
-                      <Heading size="md" as="h1">
-                        {initialData.firstname + ' ' + initialData.lastname}
-                      </Heading>
-                      <Text as="p" className="!text-blue_gray-700">
-                        {initialData.role}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-5 m-5 bg-white-A700">
-                  <form onSubmit={handleSubmit}>
-                    <div className="flex flex-col mb-[67px] gap-[25px]">
-                      <div className="flex justify-between items-center gap-5">
-                        <Heading size="s" as="h2">
-                          Profile details
-                        </Heading>
-                        <div className="flex">
-                          <div className="flex">
-                            <button
-                                type="button"
-                                className={`sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px] flex items-center justify-center text-center cursor-pointer h-[42px] px-[35px] text-lg bg-gray-400 text-white-A700 mr-2`}
-                                style={{ display: showButtons ? 'none' : 'block' }}
-                                onClick={toggleButtons}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                className={`sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px] flex items-center justify-center text-center cursor-pointer h-[42px] px-[35px] text-lg bg-blue-500 text-white-A700`}
-                                style={{ display: showButtons ? 'none' : 'block' }}
-                            >
-                              Confirm
-                            </button>
-                          </div>
-                          <Img
-                              src="images/img_edit.png"
-                              alt="edit_one"
-                              className="self-end w-[28px] object-cover"
-                              style={{ display: showButtons ? 'block' : 'none' }}
-                              onClick={toggleButtons}
+                    <div
+                      className="flex md:flex-col justify-center  gap-[30px]" /*add items-center to make the boxes in the center*/
+                    >
+                      <div className="flex flex-col md:self-stretch gap-[23px] flex-1">
+                        <div className="flex flex-col items-start gap-[7px]">
+                          <Text as="p">Name</Text>
+                          <Input
+                            shape="round"
+                            name="name"
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            placeholder={
+                              isLocked
+                                ? initialData.firstname
+                                : 'Enter your new first name'
+                            }
+                            disabled={isLocked}
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                          />
+                        </div>
+                        <div className="flex flex-col items-start gap-1.5">
+                          <Text as="p">Surname</Text>
+                          <Input
+                            shape="round"
+                            name="surname"
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            placeholder={
+                              isLocked
+                                ? initialData.lastname
+                                : 'Enter your new last name'
+                            }
+                            disabled={isLocked}
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                          />
+                        </div>
+                        <div className="flex flex-col items-start gap-[7px]">
+                          <Text as="p">User ID</Text>
+                          <Input
+                            shape="round"
+                            name="userId"
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            placeholder={initialData.id}
+                            disabled={true}
+                            value={userId}
+                          />
+                        </div>
+                        <div className="flex flex-col items-start gap-[7px]">
+                          <Text as="p">Date of birth</Text>
+                          <Input
+                            shape="round"
+                            type="date"
+                            name="dateOfBirth"
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            placeholder={
+                              isLocked
+                                ? initialData.dateofbirth
+                                : 'Enter your date of birth'
+                            }
+                            disabled={isLocked}
+                            value={formatDate(dateOfBirth)}
+                            onChange={(e) => setDateOfBirth(e.target.value)}
                           />
                         </div>
                       </div>
-                      <div className="flex md:flex-col justify-center  gap-[30px]" /*add items-center to make the boxes in the center*/>
-                        <div className="flex flex-col md:self-stretch gap-[23px] flex-1">
-                          <div className="flex flex-col items-start gap-[7px]">
-                            <Text as="p">Name</Text>
-                            <Input
-                                shape="round"
-                                name="name"
-                                className="self-stretch sm:px-5 border-black-900_26 border border-solid"
-                                placeholder={
-                                  isLocked
-                                      ? initialData.firstname
-                                      : 'Enter your new first name'
-                                }
-                                disabled={isLocked}
-                                value={firstName}
-                                onChange={(e)=>setFirstName(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex flex-col items-start gap-1.5">
-                            <Text as="p">Surname</Text>
-                            <Input
-                                shape="round"
-                                name="surname"
-                                className="self-stretch sm:px-5 border-black-900_26 border border-solid"
-                                placeholder={
-                                  isLocked
-                                      ? initialData.lastname
-                                      : 'Enter your new last name'
-                                }
-                                disabled={isLocked}
-                                value={lastName}
-                                onChange={(e)=>setLastName(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex flex-col items-start gap-[7px]">
-                            <Text as="p">User ID</Text>
-                            <Input
-                                shape="round"
-                                name="userId"
-                                className="self-stretch sm:px-5 border-black-900_26 border border-solid"
-                                placeholder={initialData.id}
-                                disabled={true}
-                                value={userId}
-                            />
-                          </div>
-                          <div className="flex flex-col items-start gap-[7px]">
-                            <Text as="p">Date of birth</Text>
-                            <Input
-                                shape="round"
-                                type="date"
-                                name="dateOfBirth"
-                                className="self-stretch sm:px-5 border-black-900_26 border border-solid"
-                                placeholder={
-                                  isLocked
-                                      ? initialData.dateofbirth
-                                      : 'Enter your date of birth'
-                                }
-                                disabled={isLocked}
-                                value={formatDate(dateOfBirth)}
-                                onChange={(e)=>setDateOfBirth(e.target.value)}
-                            />
-                          </div>
+                      <div className="h-[450px] w-px md:w-[350px] md:h-px bg-gray-600_3d" />
+                      <div className="md:self-stretch mb-1.5 flex-1">
+                        <div className="flex flex-col items-start gap-[7px]">
+                          <Text as="p">Status</Text>
+                          <Select
+                            shape="round"
+                            name="status"
+                            options={options}
+                            //placeholder={initialData.status}
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            disabled={isLocked}
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                          />
                         </div>
-                        <div className="h-[450px] w-px md:w-[350px] md:h-px bg-gray-600_3d" />
-                        <div className="md:self-stretch mb-1.5 flex-1">
-                          <div className="flex flex-col items-start gap-[7px]">
-                            <Text as="p">Status</Text>
-                            <Select
-                                shape="round"
-                                name="status"
-                                options={options}
-                                //placeholder={initialData.status}
-                                className="self-stretch sm:px-5 border-black-900_26 border border-solid"
-                                disabled={isLocked}
-                                value={status}
-                                onChange={(e) => setStatus(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex flex-col items-start mt-[18px] gap-[7px]">
-                            <Text as="p">E-mail</Text>
-                            <Input
-                                shape="round"
-                                type="email"
-                                name="email"
-                                className="self-stretch sm:px-5 border-black-900_26 border border-solid"
-                                placeholder={
-                                  isLocked ? initialData.email : 'Enter your new email'
-                                }
-                                disabled={isLocked}
-                                value={email}
-                                onChange={(e)=>setEmail(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex flex-col items-start mt-[18px] gap-[7px]">
-                            <Text as="p">Password</Text>
-                            <Input
-                                shape="round"
-                                type={showPassword ? 'text' : 'password'}
-                                name="password"
-                                suffix={
-                                  <Img
+                        <div className="flex flex-col items-start mt-[18px] gap-[7px]">
+                          <Text as="p">E-mail</Text>
+                          <Input
+                            shape="round"
+                            type="email"
+                            name="email"
+                            className="self-stretch sm:px-5 border-black-900_26 border border-solid"
+                            placeholder={
+                              isLocked
+                                ? initialData.email
+                                : 'Enter your new email'
+                            }
+                            disabled={isLocked}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                        <div className="flex flex-col items-start mt-[18px] gap-[7px]">
+                          <Text as="p">Password</Text>
+                          <Input
+                            shape="round"
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            suffix={
+                              <Img
+                                src="images/img_eye.png"
+                                alt="Eye"
+                                className="w-[23px] h-[23px]"
+                                onClick={() => setShowPassword(!showPassword)}
+                              />
+                            }
+                            className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
+                            disabled={isLocked}
+                            placeholder={
+                              isLocked
+                                ? 'Your password is hidden, you can only edit it'
+                                : 'Enter your old password'
+                            }
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                          <div
+                            style={{ display: showButtons ? 'none' : 'block' }}
+                          >
+                            <div className="flex flex-row mt-[18px] gap-[20px]">
+                              <div className="flex-1">
+                                <Text as="p" className="mb-[7px]">
+                                  New password
+                                </Text>
+                                <Input
+                                  shape="round"
+                                  type={showNewPassword ? 'text' : 'password'}
+                                  name="newPassword"
+                                  suffix={
+                                    <Img
                                       src="images/img_eye.png"
                                       alt="Eye"
                                       className="w-[23px] h-[23px]"
-                                      onClick={() => setShowPassword(!showPassword)}
-                                  />
-                                }
-                                className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
-                                disabled={isLocked}
-                                placeholder={isLocked ? "Your password is hidden, you can only edit it" : "Enter your old password"}
-                                value={password}
-                                onChange={(e)=>setPassword(e.target.value)}
-                            />
-                            <div style={{display: showButtons ? 'none' : 'block'}}>
-                              <div className="flex flex-row mt-[18px] gap-[20px]">
-                                <div className="flex-1">
-                                  <Text as="p" className="mb-[7px]">New password</Text>
-                                  <Input
-                                      shape="round"
-                                      type={showNewPassword ? 'text' : 'password'}
-                                      name="newPassword"
-                                      suffix={
-                                        <Img
-                                            src="images/img_eye.png"
-                                            alt="Eye"
-                                            className="w-[23px] h-[23px]"
-                                            onClick={() => setShowNewPassword(!showNewPassword)}
-                                        />
+                                      onClick={() =>
+                                        setShowNewPassword(!showNewPassword)
                                       }
-                                      className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
-                                      disabled={isLocked}
-                                      placeholder="Enter your new password"
-                                      value={newPassword}
-                                      onChange={(e)=>setNewPassword(e.target.value)}
-                                  />
-                                </div>
-                                <div className="flex-1">
-                                  <Text as="p" className="mb-[7px]">Confirm password</Text>
-                                  <Input
-                                      shape="round"
-                                      type={showNewPasswordConfirmation ? 'text' : 'password'}
-                                      name="newPasswordConfirmation"
-                                      suffix={
-                                        <Img
-                                            src="images/img_eye.png"
-                                            alt="Eye"
-                                            className="w-[23px] h-[23px]"
-                                            onClick={() =>
-                                                setShowNewPasswordConfirmation(
-                                                    !showNewPasswordConfirmation
-                                                )
-                                            }
-                                        />
+                                    />
+                                  }
+                                  className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
+                                  disabled={isLocked}
+                                  placeholder="Enter your new password"
+                                  value={newPassword}
+                                  onChange={(e) =>
+                                    setNewPassword(e.target.value)
+                                  }
+                                />
+                              </div>
+                              <div className="flex-1">
+                                <Text as="p" className="mb-[7px]">
+                                  Confirm password
+                                </Text>
+                                <Input
+                                  shape="round"
+                                  type={
+                                    showNewPasswordConfirmation
+                                      ? 'text'
+                                      : 'password'
+                                  }
+                                  name="newPasswordConfirmation"
+                                  suffix={
+                                    <Img
+                                      src="images/img_eye.png"
+                                      alt="Eye"
+                                      className="w-[23px] h-[23px]"
+                                      onClick={() =>
+                                        setShowNewPasswordConfirmation(
+                                          !showNewPasswordConfirmation
+                                        )
                                       }
-                                      className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
-                                      disabled={isLocked}
-                                      placeholder="Enter your password"
-                                      value={newPasswordConfirmation}
-                                      onChange={(e)=>setNewPasswordConfirmation(e.target.value)}
-                                  />
-                                </div>
+                                    />
+                                  }
+                                  className="self-stretch gap-[35px] sm:pl-5 font-medium border-black-900_26 border border-solid"
+                                  disabled={isLocked}
+                                  placeholder="Enter your password"
+                                  value={newPasswordConfirmation}
+                                  onChange={(e) =>
+                                    setNewPasswordConfirmation(e.target.value)
+                                  }
+                                />
                               </div>
                             </div>
-
                           </div>
-
-                          <Button
-                              color="red_A700"
-                              type="button"
-                              size="sm"
-                              className="w-full mt-[55px] sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px]"
-                              style={{display: showButtons ? 'none' : 'block'}}
-                              onClick={() => {
-                                toggleButtons();
-                                deleteAccount();
-                                window.location.reload();
-                              }}
-                          >
-                            Delete my account
-                          </Button>
                         </div>
+
+                        <Button
+                          color="red_A700"
+                          type="button"
+                          size="sm"
+                          className="w-full mt-[55px] sm:px-5 font-bold border-black-900_26 border border-solid rounded-[5px]"
+                          style={{ display: showButtons ? 'none' : 'block' }}
+                          onClick={() => {
+                            toggleButtons();
+                            deleteAccount();
+                            window.location.reload();
+                          }}
+                        >
+                          Delete my account
+                        </Button>
                       </div>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </>
+      </div>
+    </>
   );
 }

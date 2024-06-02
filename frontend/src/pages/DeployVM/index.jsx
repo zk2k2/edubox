@@ -6,30 +6,31 @@ import { AppSidebar } from 'components/AppSidebar';
 import { AuthContext } from '../../AuthContext';
 import { Select } from '../../components';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function DeployVM() {
   const { userName, role } = useContext(AuthContext);
-  console.log(role);
-
+  const nav = useNavigate();
   const [image, setImage] = useState('');
   const [name, setName] = useState('');
   const [python, setPython] = useState('python3');
   const [nodejs, setNodejs] = useState('nodejs20');
   const [java, setJava] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
   const [success, setSuccess] = useState(false);
   const [port, setPort] = useState('');
   const [vmPassword, setVmPassword] = useState('');
+  const [vmId, setVmId] = useState('');
   const vmIP = process.env.REACT_APP_VM_IP_ADDRESS;
   const backend = process.env.REACT_APP_BACKEND;
   const vmBackend = process.env.REACT_APP_VM_BACKEND;
   const secret = process.env.REACT_APP_VM_SECRET;
   const accessToken = Cookies.get('accessToken');
-  console.log(vmBackend);
-  console.log(backend);
 
   function requestVMDeployment(event) {
     event.preventDefault();
+    setLoadingText('We are deploying your virtual environment, please wait...');
     setLoading(true);
 
     const languages = [];
@@ -52,9 +53,9 @@ export default function DeployVM() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setLoading(false);
         setSuccess(true);
+        setVmId(data[0]);
         setPort(data[1]);
         setVmPassword(data[2]);
 
@@ -77,7 +78,6 @@ export default function DeployVM() {
       })
       .then((response) => response.json())
       .catch((error) => {
-        console.error('Error:', error);
         setLoading(false);
       });
   }
@@ -87,6 +87,51 @@ export default function DeployVM() {
       window.open(`http://${vmIP}:${port}`);
     }
   }
+
+  async function stopVM() {
+    setLoadingText(
+      'We are stopping your virtual environment, you will be redirected to the home page upon completion...'
+    );
+    setLoading(true);
+    try {
+      const stopVmResponse = await fetch(`${vmBackend}/stopVm`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          secret: secret,
+          id: vmId,
+        }),
+      });
+
+      if (!stopVmResponse.ok) {
+        throw new Error('Failed to stop VM');
+      }
+
+      const stopVmData = await stopVmResponse.json();
+
+      const deleteContainerResponse = await fetch(
+        `${backend}/api/v1/containers/${vmId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      );
+
+      if (!deleteContainerResponse.ok) {
+        throw new Error('Failed to delete container');
+      }
+
+      nav('/home');
+    } catch (error) {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Helmet>
@@ -149,8 +194,7 @@ export default function DeployVM() {
                   <div className="flex flex-row bg-white-A700 items-center justify-center h-[500px] w[1200px] m-5 p-5">
                     <div className="flex flex-col justify-center items-center">
                       <Text as="h3" className="!font-normal !text-xl mb-3">
-                        We are deploying your virtual environment, please
-                        wait...
+                        {loadingText}
                       </Text>
                       <img src="images/loading.gif" alt="" />
                     </div>
@@ -175,15 +219,32 @@ export default function DeployVM() {
                       </Text>
                       <button
                         onClick={accessVM}
+                        type="button"
                         className="sign-up-button w-full h-12 mt-5"
                       >
                         <div className="flex justify-center">
                           <Text as="h3" className=" !text-white-A700">
-                            Access my Virtual Machine
+                            Launch my Virtual Machine
                           </Text>
                           <img
                             src="images/external_link.png"
                             className=" w-7 h-7 mx-3"
+                            alt=""
+                          />
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={stopVM}
+                        className="sign-up-button !bg-gray-200 w-full h-12 mt-5"
+                      >
+                        <div className="flex justify-center">
+                          <Text as="h3" className=" !text-black">
+                            Stop My Virtual Machine
+                          </Text>
+                          <img
+                            src="images/img_stop.png"
+                            className=" w-6 h-6 mx-3 mt-0.5"
                             alt=""
                           />
                         </div>
