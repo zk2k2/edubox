@@ -7,7 +7,7 @@ import { AuthContext } from '../../AuthContext';
 import { Select } from '../../components';
 
 export default function Guide() {
-  const { userName } = useContext(AuthContext);
+  const { userName, role } = useContext(AuthContext);
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function Guide() {
         <div className="flex flex-col">
           <Header className="p-[15px] bg-blue-A700" firstname={userName} />
           <div className="flex md:flex-col justify-between items-start w-[98%] md:w-full gap-5 md:p-5">
-            <AppSidebar role="USER" />
+            <AppSidebar role={role} />
             <div className="flex flex-col md:self-stretch gap-[18px] flex-1">
               <div className="flex p-[13px] bg-white-A700 mx-5 mt-5">
                 <div className="flex flex-col w-[56%] md:w-full mt-1.5 ml-[13px] gap-[15px] md:ml-0">

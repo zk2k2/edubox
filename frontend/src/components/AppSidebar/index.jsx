@@ -91,14 +91,14 @@ const AppSidebar = ({ collapsed, role, ...props }) => {
         <MenuItem
           icon={
             <Img
-              src="images/img_gear.png"
+              src="images/privacy_icon_grey.png"
               alt="gear_one"
               className="h-[32px] w-[32px] object-cover"
             />
           }
-          component={<Link to="/settings" />}
+          component={<Link to="/privacy-policy" />}
         >
-          Settings
+          Privacy Policy
         </MenuItem>
       </Menu>
     </Sidebar>
