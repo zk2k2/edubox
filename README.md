@@ -1,5 +1,11 @@
 # 📦 EduBox
 
+
+
+https://github.com/zk2k2/edubox/assets/98645757/dfac3356-1e9a-4c67-8cdf-69f48bf4b2b1
+
+
+
 EduBox is a platform designed to simplify the deployment of Virtual Machines (VMs) for educational purposes. It allows users to deploy VMs with a base image of their choice and install essential programming environments such as Python, Node.js, and Java. EduBox also supports deploying multiple VMs with different configurations, providing students with a flexible and approachable way to set up Linux environments for their learning needs.
 
 ## ✨ Features
