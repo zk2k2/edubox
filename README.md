@@ -6,12 +6,12 @@ https://github.com/zk2k2/edubox/assets/98645757/dfac3356-1e9a-4c67-8cdf-69f48bf4
 
 
 
-EduBox is a platform designed to simplify the deployment of Virtual Machines (VMs) for educational purposes. It allows users to deploy VMs with a base image of their choice and install essential programming environments such as Python, Node.js, and Java. EduBox also supports deploying multiple VMs with different configurations, providing students with a flexible and approachable way to set up Linux environments for their learning needs.
+EduBox is a platform designed and implemented for the automated deployment of containerized Linux environments with a noVNC desktop interface, enabling users to learn Linux and run code in Python, Node.js, Java, and more.
 
 ## ✨ Features
-- **Flexible VM Deployment**: Deploy VMs with various base images.
+- **Flexible Deployment**: Deploy environments with various base images.
 - **Programming Environment Setup**: Easily install Python, Node.js, and Java.
-- **Multiple Configurations**: Deploy multiple VMs with different setups.
+- **Multiple Configurations**: Deploy multiple environments with different setups.
 - **User-Friendly**: Designed to be approachable for students with varying levels of technical expertise.
 
 ## 🚀 Getting Started
