@@ -46,9 +46,8 @@ Ensure you have the following installed on your system:
 ### 🔧 VM API Setup
 1. **Open a WSL session and run the following commands:**
     ```sh
-    root@BEST-TECHNOLOGY:/mnt/c/Users/USER/Documents/Projects/edubox# cd vm_backend
-    root@BEST-TECHNOLOGY:/mnt/c/Users/USER/Documents/Projects/edubox/vm_backend# cd Api
-    root@BEST-TECHNOLOGY:/mnt/c/Users/USER/Documents/Projects/edubox/vm_backend/Api# flask --app api.py run --host=0.0.0.0
+    root@/edubox# cd vm_backend/Api
+    root@/edubox/vm_backend/Api# flask --app api.py run --host=0.0.0.0
     ```
 
 This setup will get EduBox up and running on your local machine, allowing you to deploy and manage Virtual Machines for educational purposes. If you encounter any issues, please refer to the documentation or contact our support team.
@@ -60,4 +59,4 @@ We welcome contributions to improve EduBox! Please fork the repository and submi
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📧 Contact
-For more information, please contact me via my GitHub page.
+For more information, please contact me via email.
